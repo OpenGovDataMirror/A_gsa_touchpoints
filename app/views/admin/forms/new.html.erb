@@ -1,0 +1,112 @@
+<% content_for :navigation_title do %>
+  New Form
+<% end %>
+
+<div class="grid-col-12">
+  <p>
+    <a href="/admin/forms">
+      <span class="fa fa-arrow-circle-left"></span>
+      Back to Forms
+    </a>
+  </p>
+  <p class="font-sans-lg">
+    Select
+    <strong>ONE</strong>
+    method to start building your survey.
+  </p>
+</div>
+<div class="grid-row grid-gap-md">
+  <div class="tablet:grid-col-4">
+    <div class="well light-bg form-templates add-box-shadow">
+      <div class="font-heading-lg">
+        <i class="far fa-list-alt" aria-hidden="true"></i>
+        Use a Template
+      </div>
+      <p class="usa-prose">
+        Here are some common surveys you can use to get started.
+        Preview the templates,
+        then copy a template that you can modify to meet your needs.
+      </p>
+
+    <% if @templates.present? %>
+    <ul class="usa-card-group">
+      <% @templates.each do |form| %>
+      <li class="usa-card desktop:grid-col-12">
+        <div class="usa-card__container">
+          <div class="usa-card__header">
+            <h2 class="usa-card__heading">
+              <%= form.name %>
+            </h2>
+          </div>
+          <div class="usa-card__body">
+            <%= to_markdown(form.notes) %>
+          </div>
+          <div class="usa-card__footer">
+            <%= link_to example_admin_form_path(form), class: "usa-button usa-button--unstyled", target: "_blank", rel: "noopener" do %>
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Preview
+            <% end %>
+            <%= link_to copy_admin_form_path(form), method: :post, data: { confirm: 'Are you sure?' }, class: "usa-button usa-button--outline" do %>
+            <i class="fa fa-copy" aria-hidden="true"></i>
+            Copy
+            <% end %>
+          </div>
+        </div>
+      </li>
+      <% end %>
+    </ul>
+    <% end %>
+    </div>
+  </div>
+  <div class="tablet:grid-col-4">
+    <div class="well light-bg add-box-shadow">
+      <div class="font-heading-lg">
+        <i class="far fa-flag" aria-hidden="true"></i>
+        Start from Scratch
+      </div>
+      <p class="usa-prose">
+        Enter the following information to create a new survey from scratch.
+      </p>
+      <%= render 'form', form: @form %>
+    </div>
+  </div>
+  <div class="tablet:grid-col-4">
+    <div class="well light-bg add-box-shadow">
+      <div class="font-heading-lg">
+        <i class="far fa-copy" aria-hidden="true"></i>
+        Copy a Form
+      </div>
+      <p class="usa-prose">
+        Select which of your existing surveys you'd like to copy
+        and give it a new name.
+      </p>
+      <% if @surveys.present? %>
+        <%= form_tag(copy_id_admin_forms_path) do %>
+          <%= select_tag "id", options_from_collection_for_select(@surveys, "short_uuid", "name"), { prompt: "Select a form", class: "usa-select" } %>
+          <p>
+            <%= submit_tag "Copy Form", class: "usa-button", disabled: true %>
+          </p>
+        <% end %>
+      <% else %>
+        <%= form_tag(copy_id_admin_forms_path) do %>
+          <%= select_tag "id", options_from_collection_for_select(@surveys, "short_uuid", "name"), { prompt: "Select a form", class: "usa-select" } %>
+          <p>
+            <%= submit_tag "Copy Form", class: "usa-button", disabled: true %>
+          </p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Enable copy button if a valid dropdown item is selected
+  $("select#id").on("change", function() {
+    var contents = $(this).val();
+    if(contents == "") {
+      $("input[type='submit'][value='Copy Form']").prop("disabled", true)
+    } else {
+      $("input[type='submit'][value='Copy Form']").prop("disabled", false)
+    }
+  })
+</script>

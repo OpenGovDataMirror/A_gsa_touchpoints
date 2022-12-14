@@ -1,0 +1,60 @@
+<% content_for :navigation_title do %>
+  Events
+<% end %>
+<table class="usa-table">
+  <% @users = User.all %>
+  <% @user_email_map = {} %>
+  <% @users.map { |user| @user_email_map[user.id] = user.email } %>
+  <thead>
+  <tr>
+    <th>Event ID</th>
+    <th>Object Type</th>
+    <th>Object ID</th>
+    <th>Description</th>
+    <th>User</th>
+    <th>Created at</th>
+    <th>Updated at</th>
+  </tr>
+  </thead>
+  <tbody>
+    <% @events.reverse.each do |event| %>
+    <tr data-id="<%= event.id %>">
+      <td><%= event.id %></td>
+      <td><%= event.object_type %></td>
+      <td><%= event.object_id %></td>
+      <td><%= event.description %></td>
+      <td><%= @user_email_map[event.user_id] %></td>
+      <td><%= format_time(event.created_at, current_user.time_zone) %></td>
+      <td><%= format_time(event.updated_at, current_user.time_zone) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @events %>
+
+<p>
+  <%= link_to "Export Events to CSV", admin_export_events_url(format: "csv"), class: "usa-button export-btn", target: "_blank", rel: "noopener" %>
+</p>
+
+<script>
+  $(function() {
+    $('.export-btn').on("click", function(e) {
+      e.preventDefault();
+
+      if ($(this).text() == "Exporting...") {
+        console.log("Click disabled while exporting");
+        return false;
+      }
+
+      var uuid = generateUUID();
+      $(this).html('Exporting...').addClass('cursor-not-allowed');
+
+      var url = $(this).attr('href') + '?uuid=' + uuid + '';
+      subscribeExportChannel(uuid, function() {
+        $.get(url);
+      });
+
+      return false;
+    });
+  });
+</script>

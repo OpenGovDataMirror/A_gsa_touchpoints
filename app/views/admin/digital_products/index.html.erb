@@ -1,0 +1,128 @@
+<% content_for :navigation_title do %>
+  Mobile Products
+  <%= link_to new_admin_digital_product_path, class: "usa-button usa-button-inverted float-right" do %>
+    <i class="fa fa-plus-circle"></i>
+    New Mobile Product
+  <% end %>
+<% end %>
+
+<p>
+  <%= link_to admin_registry_path do %>
+    <i class="fa fa-arrow-circle-left"></i>
+    Back to the Digital Registry
+  <% end %>
+</p>
+
+<div class="grid-row grid-gap-lg">
+  <div class="desktop:grid-col-6">
+    <div
+      class="usa-summary-box"
+      role="region"
+      aria-labelledby="summary-box-key-information"
+    >
+      <div class="usa-summary-box__body">
+        <div class="usa-summary-box__text">
+          <span id="summary-box-key-information">Mobile Products</span>
+          differ from websites or web applications.
+          <br>
+          Common Mobile Products may include Android or iOS applications.
+          <br>
+          Search for Mobile Products using the filters below.
+
+          <div class="margin-top-2">
+            <%= render 'components/feedback-button' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid-row grid-gap-md">
+  <div class="grid-col-6">
+    <%= label_tag "Search by Agency", nil, class: "usa-label" %>
+    <%= select_tag :organization_id, options_for_select(organization_dropdown_options), { prompt: "All", class: "usa-select" } %>
+  </div>
+  <div class="grid-col-6">
+    <%= label_tag "Search by keywords", nil, class: "usa-label" %>
+    <%= text_field_tag :tags, nil, class: "usa-input" %>
+  </div>
+</div>
+<div class="grid-row grid-gap-md">
+  <div class="grid-col-6" hidden>
+    &nbsp;
+  </div>
+  <div class="grid-col-6">
+    <%= label_tag "Status selector", nil, class: "usa-label" %>
+    <%= select_tag :aasm_state, options_for_select(["All", "Created", "Published", "Archived"]), class: "usa-select" %>
+  </div>
+</div>
+
+<p hidden>
+  <%= link_to "Export results to .csv", admin_digital_service_accounts_path(format: :csv), class: "usa-button" %>
+</p>
+
+<div class="search-results">
+  <%= render 'results', digital_products: @digital_products %>
+  <%= paginate @digital_products %>
+</div>
+
+<script>
+  $(function() {
+    $("#tags").on("keyup", debounce(function() {
+      var searchValue = $("#tags").val();
+
+      $.ajax({
+        url: '/admin/digital_products/search',
+        data: {
+          search: searchValue
+        }
+      });
+    }, 400));
+
+    $(".search-tag-link").on("click", function() {
+      $("#search_text").val("");
+      $.ajax({
+        url: '/admin/digital_products/search',
+        data: {
+          tag: $(this).attr("data-name")
+        }
+      });
+    });
+
+    $('#organization_id').on("change", function(event) {
+      event.preventDefault();
+
+      $.ajax({
+        url: '/admin/digital_products/search',
+        data: {
+          organization_id: event.target.value
+        }
+      });
+    });
+
+    $('#aasm_state').on("change", function(event) {
+      event.preventDefault();
+
+      $.ajax({
+        url: '/admin/digital_products/search',
+        data: {
+          aasm_state: event.target.value
+        }
+      });
+    });
+
+
+    $('#service').on("change", function(event) {
+      event.preventDefault();
+
+      $.ajax({
+        url: '/admin/digital_products/search',
+        data: {
+          service: event.target.value
+        }
+      });
+    });
+
+  });
+</script>

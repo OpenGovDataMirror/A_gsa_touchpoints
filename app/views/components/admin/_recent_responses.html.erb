@@ -1,0 +1,42 @@
+<div id="recent-responses">
+  <% if forms.present? %>
+    <table class="usa-table">
+      <thead>
+        <tr>
+          <th>
+            Organization name
+          </th>
+          <th>
+            Form name
+          </th>
+          <th>
+            Response count
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% forms.each do |form| %>
+        <tr>
+          <td>
+            <%= link_to form.organization.name, admin_organization_path(form.organization) %>
+          </td>
+          <td>
+            <%= link_to form.name, admin_form_path(form) %>
+          </td>
+          <td>
+            <%= form.submissions.where("created_at > ?", Time.now - days_since.days).count %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="usa-alert">
+      <div class="usa-alert__body">
+        <p class="usa-alert__text">
+          No responses in the recent timeframe.
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>

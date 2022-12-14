@@ -1,0 +1,78 @@
+<%= form_with(model: organization, url: (organization.persisted? ? admin_organization_path(organization) : admin_organizations_path), local: true) do |form| %>
+  <% if organization.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(organization.errors.count, "error") %> prohibited this organization from being saved:
+      </h2>
+      <ul class="usa-list">
+      <% organization.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :name, class: "usa-label" %>
+    <%= form.text_field :name, class: "usa-input", placeholder: "General Services Administration" %>
+  </div>
+  <div class="field">
+    <%= form.label :logo, class: "usa-label" %>
+    <div class="usa-alert usa-alert--info">
+      <div class="usa-alert__body">
+        <p class="usa-alert__text">
+          The uploaded logo will be transformed into 2 additional sizes:
+          <ul class="usa-list">
+            <li>Thumbnail - 96px width by 96px tall</li>
+            <li>Card - 360px wide by variable height</li>
+          </ul>
+        </p>
+      </div>
+    </div>
+    <p>
+      <%= form.file_field :logo, class: "usa-button" %>
+    </p>
+  </div>
+  <div class="field">
+    <%= form.label :domain, class: "usa-label" %>
+    <div class="font-sans-xs">
+      Allows users from
+      <code>@<%= organization.domain %></code> email addresses to login.
+    </div>
+    <%= form.text_field :domain, class: "usa-input", placeholder: "gsa.gov" %>
+  </div>
+  <div class="field">
+    <%= form.label :url, class: "usa-label" %>
+    <%= form.text_field :url, class: "usa-input", placeholder: "https://gsa.gov" %>
+  </div>
+  <div class="field">
+    <%= form.label :digital_analytics_path, class: "usa-label" %>
+    <%= form.text_field :digital_analytics_path, class: "usa-input", placeholder: "See usa.analytics.gov" %>
+  </div>
+  <div class="field">
+    <%= form.label :abbreviation, class: "usa-label" %>
+    <%= form.text_field :abbreviation, class: "usa-input", placeholder: "GSA" %>
+  </div>
+  <br>
+  <fieldset class="usa-fieldset">
+    <div class="usa-checkbox">
+      <%= form.check_box :enable_ip_address, class: "usa-checkbox__input" %>
+      <%= form.label :enable_ip_address, "Record IP address?", class: "usa-checkbox__label" %>
+      <p>
+        <small>
+          Checking this box stores IP address for responses and includes it in CSV exports.
+        </small>
+      </p>
+    </div>
+  </fieldset>
+  <div class="field">
+    <%= form.label :mission_statement, class: "usa-label" %>
+    <%= form.text_area :mission_statement, class: "usa-textarea", placeholder: "Organization's mission statement" %>
+  </div>
+  <div class="field">
+    <%= form.label :notes, class: "usa-label" %>
+    <%= form.text_area :notes, class: "usa-textarea", placeholder: "CX & Service Design notes about this Org" %>
+  </div>
+  <p>
+    <%= form.submit class: "usa-button" %>
+  </p>
+<% end %>

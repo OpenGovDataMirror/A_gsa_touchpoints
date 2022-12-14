@@ -1,0 +1,10 @@
+<%= render 'user_mailer/components/header' %>
+<h1>
+  New Website created
+</h1>
+<p>
+  Hi <%= @emails.to_sentence %>,
+</p>
+<p>
+  The website <%= link_to @website.domain, admin_website_url(@website) %> was created in Touchpoints.
+</p>

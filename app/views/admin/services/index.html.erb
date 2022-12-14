@@ -1,0 +1,133 @@
+<% content_for :navigation_title do %>
+  Services
+  <%= link_to new_admin_service_path, class: "usa-button usa-button-inverted float-right" do %>
+    <i class="fa fa-plus-circle"></i>
+    New Service
+  <% end %>
+<% end %>
+
+<p>
+  <%= link_to admin_forms_path do %>
+    <i class="fa fa-arrow-circle-left"></i>
+    Back to Forms
+  <% end %>
+</p>
+
+<div
+  class="usa-summary-box"
+  role="region"
+  aria-labelledby="summary-box-key-information"
+>
+  <div class="usa-summary-box__body">
+    <h3 class="usa-summary-box__heading" id="summary-box-key-information">
+      Managing Services in Touchpoints
+    </h3>
+    <div class="usa-summary-box__text">
+      <p>
+        Touchpoints exists to support continuous improvement in how public services are designed, delivered, and measured.
+        Services are delivered internally within an agency, between agencies, and to the public.
+        Services consist of people or systems performing work in a sequence of (sometimes conditional) steps
+        to deliver value for other people.
+        Services can be modeled, to gain more insight during design and measurement of a service.
+        Consider using
+         <%= link_to "human-centered design methods", "https://methods.18f.gov/", target: "_blank", rel: "noopener"%>
+        to ensure products and services deliver value to users.
+      </p>
+      <p>
+        A definition for Services is provided in
+        <a href="https://www.whitehouse.gov/wp-content/uploads/legacy_drupal_files/omb/memoranda/2017/m-17-06.pdf" target="_blank" rel="noopener">M-17-06</a>.
+        Any non-sensitive federal Service (internal or external) can be
+        managed here to support a Service Inventory or Catalog.
+      </p>
+      <p>
+        Some services managed here may be provided by designated
+        high-impact <%= link_to "Service Providers", admin_service_providers_path %> (HISPs).
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="well">
+  <div class="grid-row grid-gap-lg">
+    <div class="tablet:grid-col-6">
+      <div class="field">
+        <h3>
+          <span class="fa fa-search"></span>
+          Search services
+        </h3>
+        <%= label_tag :search_text, "by organization or name", class: "font-sans-2xs" %>
+        <%= text_field_tag :search_text, nil, class: "usa-input", autofocus: true %>
+      </div>
+    </div>
+    <div class="tablet:grid-col-6">
+      <h3>
+        <span class="fa fa-filter"></span>
+        Filter by tag
+        <% if params[:tag].present? %>
+        <small>
+          <%= link_to "Clear filters", admin_services_path, class: "font-sans-3xs" %>
+        </small>
+        <% end %>
+      </h3>
+      <br>
+      <% if @tags.first %>
+      <div class="tag-list">
+        <% @tags.order(:name).each do |tag| %>
+        <%= link_to admin_services_path(tag: tag.name), class: "search-tag-link",  "data-name" => tag.name do %>
+        <span class="usa-tag">
+          <%= tag.name %>
+          (<%= tag.taggings_count %>)
+        </span>
+        <% end %>
+        <% end %>
+      </div>
+      <% else %>
+      <div class="usa-alert">
+        <div class="usa-alert__body">
+          <p class="usa-alert__text">
+            No tags have been applied to Services yet.
+          </p>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="search-results">
+  <%= render 'results' %>
+</div>
+
+<% if service_manager_permissions? %>
+<p>
+  <%= link_to export_csv_admin_services_path, class: "usa-button usa-button--outline" do %>
+    <i class="fa fa-download"></i>
+    Export all services to CSV
+  <% end %>
+</p>
+<% end %>
+
+<script>
+  $(function() {
+    $("#search_text").on("keyup", debounce(function() {
+      var searchValue = $("#search_text").val();
+
+      $.ajax({
+        url: '/admin/services/search',
+        data: {
+          search: searchValue
+        }
+      });
+    }, 400));
+
+    $(".search-tag-link").on("click", function() {
+      $("#search_text").val("");
+
+      $.ajax({
+        url: '/admin/services/search',
+        data: {
+          tag: $(this).attr("data-name")
+        }
+      });
+    });
+  });
+</script>

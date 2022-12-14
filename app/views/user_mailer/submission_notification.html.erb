@@ -1,0 +1,13 @@
+<%= render 'user_mailer/components/header' %>
+<h3>
+  Response Notification
+</h3>
+<p>
+  New feedback has been submitted to your form,
+  <%= link_to @form.name, responses_admin_form_url(@form) %>.
+</p>
+<p>
+  Visit
+  <%= link_to admin_form_submission_url(@form, @submission), admin_form_submission_url(@form, @submission) %>
+  to view the response.
+</p>

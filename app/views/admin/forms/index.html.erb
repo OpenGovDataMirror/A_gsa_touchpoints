@@ -1,0 +1,133 @@
+<% content_for :navigation_title do %>
+  My Forms
+  <%= link_to new_admin_form_path, class: "usa-button usa-button-inverted float-right" do %>
+    <i class="fa fa-plus-circle"></i>
+    New Form
+  <% end %>
+<% end %>
+
+<% if @forms.present? || @archived_forms.present? %>
+  <p class="font-sans-3xs">
+  <% if !params[:all] %>
+    <%= link_to all_admin_forms_path do %>
+      Also show archived forms
+    <% end %>
+  <% end %>
+
+  <% if params[:all] %>
+    <%= link_to admin_forms_path do %>
+      Show active forms only
+    <% end %>
+  <% end %>
+  </p>
+<% end %>
+
+<% if @forms.present? %>
+<table class="usa-table width-full">
+  <thead class="font-sans-3xs">
+    <tr>
+      <th>#</th>
+      <th data-sortable scope="col"
+        data-type="name">
+        Name
+      </th>
+      <th data-sortable scope="col">
+        Questions
+      </th>
+      <th data-sortable scope="col">
+        Activations
+      </th>
+      <th data-sortable scope="col">
+        Responses
+      </th>
+      <th data-sortable scope="col">
+        Completion Rate
+      </th>
+      <th data-sortable scope="col"
+        data-type="status">
+        Status
+      </th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @forms.each_with_index do |form, index| %>
+    <tr>
+      <td class="text-center">
+        <%= index + 1 %>
+      </td>
+      <td>
+        <%= link_to form.name, admin_form_path(form) %>
+      </td>
+      <td>
+        <%= form.questions_count %>
+      </td>
+      <td>
+        <%= form.survey_form_activations %>
+      </td>
+      <td>
+        <%= form.response_count %>
+      </td>
+      <td>
+        <%= form.completion_rate %>
+      </td>
+      <td>
+        <% if form.aasm_state == "live" %>
+        <span class="usa-tag bg-green">
+          <%= form.aasm_state %>
+        </span>
+        <% elsif form.aasm_state == "in_development" %>
+        <span class="usa-tag bg-cyan">
+          <%= form.aasm_state %>
+        </span>
+        <% else %>
+        <span class="usa-tag">
+          <%= form.aasm_state %>
+        </span>
+        <% end %>
+      </td>
+      <td>
+        <ul class="usa-nav__primary float-menu usa-accordion">
+          <li class="usa-nav__primary-item">
+            <button class="usa-accordion__button usa-nav__link  usa-current" aria-expanded="false" aria-controls="extended-nav-section-one-<%= form.short_uuid %>">
+              <span><i class="fa fa-ellipsis-v"></i></span>
+            </button>
+            <ul id="extended-nav-section-one-<%= form.short_uuid %>" class="usa-nav__submenu" hidden="">
+              <li class="usa-nav__submenu-item">
+                <%= link_to edit_admin_form_path(form) do %>
+                  Edit
+                <% end %>
+              </li>
+              <li class="usa-nav__submenu-item">
+                <%= link_to 'Preview', example_admin_form_path(form), target: "_blank", rel: "noopener" %>
+              </li>
+              <li class="usa-nav__submenu-item">
+                <%= link_to copy_admin_form_path(form), method: :post, data: { confirm: 'Are you sure?' } do %>
+                  Copy
+                <% end %>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+<div class="grid-row grid-gap-md">
+  <div class="grid-col">
+    <p class="font-serif-xl">
+      Welcome to Touchpoints!
+    </p>
+    <p class="font-sans-lg">
+      To get started,
+      <%= link_to "create a new survey", new_admin_form_path %>.
+    </p>
+    <p>
+      You can create a form from an existing template, copy a previous survey,
+      or start from scratch.
+    </p>
+  </div>
+</div>
+<% end %>

@@ -1,0 +1,78 @@
+<% content_for :navigation_title do %>
+  Viewing Permissions for:
+  <%= @form.name %>
+<% end %>
+<p>
+  <%= link_to admin_forms_path do %>
+    <i class="fa fa-arrow-circle-left"></i>
+    Back to Forms
+  <% end %>
+</p>
+<%= render 'admin/forms/nav', form: @form %>
+<% if is_at_least_form_manager?(user: current_user, form: @form) %>
+  <%= render 'components/roles_and_permissions',
+    form: @form,
+    available_members: @available_members,
+    users: @form.users.order(:email)
+  %>
+<% end %>
+
+<br>
+<br>
+
+<script>
+  $(function() {
+    // Initially set to disabled
+    $("#add-user-button").attr("disabled", true);
+
+    $("#add-user-button").on("click", function(e) {
+      var userId = $("#add-user-id").val();
+      var role = $("#add-user-role").val();
+
+      var request = $.ajax({
+        url: "/admin/forms/<%= @form.short_uuid %>/add_user",
+        dataType: "json",
+        method: "POST",
+        data: {
+          user_id : userId,
+          role: role
+        }
+      }).done(function(response) {
+        location.reload();
+      }).fail(function(response) {
+        if (response.status == 422) {
+          alert("This User Role could not be added.");
+        }
+      });
+    });
+
+    $("#add-user-role").on("change", function(e) {
+      var userId = e.target.value
+      if (userId != "") {
+        $("#add-user-button").attr("disabled", false);
+      } else {
+        $("#add-user-button").attr("disabled", true);
+      }
+    });
+
+    // Remove a Form Manager or Response Viewer User
+    $(".remove-user").on("click", function(e) {
+      e.preventDefault();
+
+      var userId = $(this).attr("data-id");
+
+      var request = $.ajax({
+        url: "/admin/forms/<%= @form.short_uuid %>/remove_user",
+        dataType: "json",
+        method: "DELETE",
+        data: {
+          user_id : userId
+        }
+      }).done(function(response) {
+        location.reload();
+      }).fail(function(response) {
+        alert(response);
+      });
+    });
+  });
+</script>

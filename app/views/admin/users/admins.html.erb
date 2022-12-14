@@ -1,0 +1,140 @@
+<% content_for :navigation_title do %>
+  Admin User Audit Report
+<% end %>
+<p>
+  Current time: <%= Time.now.to_datetime %>
+</p>
+<div class="users">
+  <table class="usa-table" style="width: 100%;">
+    <thead>
+      <tr>
+      <% if current_user.admin? %>
+        <th data-sortable scope="col">Admin</th>
+      <% end %>
+        <th data-sortable scope="col">Role</th>
+        <th data-sortable scope="col">Email</th>
+        <th data-sortable scope="col">Organization Name</th>
+      <% if current_user.admin? %>
+        <th data-sortable scope="col">Last signed in</th>
+      <% end %>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @admins.each do |user| %>
+        <tr class="user" data-id="<%= user.id %>">
+        <% if current_user.admin? %>
+          <td class="text-center"><%= user.admin? ? '✅' : nil %></td>
+        <% end %>
+          <td>
+            Admin
+          </td>
+          <td>
+            <%= link_to user.email, admin_user_path(user) %>
+            <% if user.inactive? %>
+            <span class="usa-tag float-right">Inactive</span>
+            <% end %>
+          </td>
+          <td><%= user.organization ? user.organization.name : nil %></td>
+        <% if current_user.admin? %>
+          <td data-sort-value="<%= user.current_sign_in_at.to_i %>">
+            <%= time_ago_in_words(user.current_sign_in_at) if user.current_sign_in_at %>
+          </td>
+        <% end %>
+        </tr>
+      <% end %>
+
+      <% @service_managers.each do |user| %>
+        <tr class="user" data-id="<%= user.id %>">
+        <% if current_user.admin? %>
+          <td class="text-center"><%= user.admin? ? '✅' : nil %></td>
+        <% end %>
+        <td>
+          Service Manager
+        </td>
+          <td>
+            <%= link_to user.email, admin_user_path(user) %>
+            <% if user.inactive? %>
+            <span class="usa-tag float-right">Inactive</span>
+            <% end %>
+          </td>
+          <td><%= user.organization ? user.organization.name : nil %></td>
+        <% if current_user.admin? %>
+          <td data-sort-value="<%= user.current_sign_in_at.to_i %>">
+            <%= time_ago_in_words(user.current_sign_in_at) if user.current_sign_in_at %>
+          </td>
+        <% end %>
+        </tr>
+      <% end %>
+
+      <% @performance_managers.each do |user| %>
+        <tr class="user" data-id="<%= user.id %>">
+        <% if current_user.admin? %>
+          <td class="text-center"><%= user.admin? ? '✅' : nil %></td>
+        <% end %>
+        <td>
+          Performance Manager
+        </td>
+          <td>
+            <%= link_to user.email, admin_user_path(user) %>
+            <% if user.inactive? %>
+            <span class="usa-tag float-right">Inactive</span>
+            <% end %>
+          </td>
+          <td><%= user.organization ? user.organization.name : nil %></td>
+        <% if current_user.admin? %>
+          <td data-sort-value="<%= user.current_sign_in_at.to_i %>">
+            <%= time_ago_in_words(user.current_sign_in_at) if user.current_sign_in_at %>
+          </td>
+        <% end %>
+        </tr>
+      <% end %>
+
+      <% @registry_managers.each do |user| %>
+        <tr class="user" data-id="<%= user.id %>">
+        <% if current_user.admin? %>
+          <td class="text-center"><%= user.admin? ? '✅' : nil %></td>
+        <% end %>
+        <td>
+          Registry Manager
+        </td>
+          <td>
+            <%= link_to user.email, admin_user_path(user) %>
+            <% if user.inactive? %>
+            <span class="usa-tag float-right">Inactive</span>
+            <% end %>
+          </td>
+          <td><%= user.organization ? user.organization.name : nil %></td>
+        <% if current_user.admin? %>
+          <td data-sort-value="<%= user.current_sign_in_at.to_i %>">
+            <%= time_ago_in_words(user.current_sign_in_at) if user.current_sign_in_at %>
+          </td>
+        <% end %>
+        </tr>
+      <% end %>
+
+      <% @website_managers.each do |user| %>
+        <tr class="user" data-id="<%= user.id %>">
+        <% if current_user.admin? %>
+          <td class="text-center"><%= user.admin? ? '✅' : nil %></td>
+        <% end %>
+        <td>
+          Website Manager
+        </td>
+          <td>
+            <%= link_to user.email, admin_user_path(user) %>
+            <% if user.inactive? %>
+            <span class="usa-tag float-right">Inactive</span>
+            <% end %>
+          </td>
+          <td><%= user.organization ? user.organization.name : nil %></td>
+        <% if current_user.admin? %>
+          <td data-sort-value="<%= user.current_sign_in_at.to_i %>">
+            <%= time_ago_in_words(user.current_sign_in_at) if user.current_sign_in_at %>
+          </td>
+        <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

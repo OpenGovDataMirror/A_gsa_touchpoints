@@ -1,0 +1,135 @@
+<%= form_with(model: digital_product, url: (digital_product.persisted? ? admin_digital_product_path(digital_product) : admin_digital_products_path), data: { turbo: false }) do |form| %>
+  <% if digital_product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(digital_product.errors.count, "error") %> prohibited this digital_product from being saved:</h2>
+
+      <ul>
+        <% digital_product.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name, "Name", class: "usa-label" %>
+    <%= form.text_field :name, class: "usa-input", required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :short_description, class: "usa-label" %>
+    <%= form.text_field :short_description, class: "usa-input", required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :long_description, class: "usa-label" %>
+    <div class="usa-hint font-sans-2xs">
+      Should be the same or similar to your app store description
+    </div>
+    <%= form.text_area :long_description, class: "usa-textarea" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :screenshot_url, "Icon URL", class: "usa-label" %>
+    <div class="usa-hint font-sans-2xs">
+      Please provide the URL of the app or website’s icon
+    </div>
+    <%= form.text_field :screenshot_url, class: "usa-input" %>
+  </div>
+
+  <div class="field" hidden>
+    <%= form.label :code_repository_url, class: "usa-label" %>
+    <%= form.text_field :code_repository_url, class: "usa-input" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :language, class: "usa-label" %>
+    <select class="usa-select" name="digital_product[language]" id="digital_product_language">
+      <option value="">Select</option>
+      <option selected="selected" value="English">English</option>
+      <option value="Afrikaans">Afrikaans</option>
+      <option value="Amharic">Amharic</option>
+      <option value="Arabic">Arabic</option>
+      <option value="Azerbaijani">Azerbaijani</option>
+      <option value="Bangla">Bangla</option>
+      <option value="Basque">Basque</option>
+      <option value="Bengali">Bengali</option>
+      <option value="Bulgarian">Bulgarian</option>
+      <option value="Catalan">Catalan</option>
+      <option value="Chinese(Simplified)">Chinese  (Simplified)</option>
+      <option value="Chinese(Traditional)">Chinese  (Traditional)</option>
+      <option value="Croatian">Croatian</option>
+      <option value="Czech">Czech</option>
+      <option value="Danish">Danish</option>
+      <option value="Dutch">Dutch</option>
+      <option value="English(UK)">English (UK)</option>
+      <option value="Estonian">Estonian</option>
+      <option value="Filipino">Filipino</option>
+      <option value="Finnish">Finnish</option>
+      <option value="French">French</option>
+      <option value="French(Canada)">French (Canada)</option>
+      <option value="Galician">Galician</option>
+      <option value="German">German</option>
+      <option value="Greek">Greek</option>
+      <option value="Gujarati">Gujarati</option>
+      <option value="Hebrew">Hebrew</option>
+      <option value="Hindi">Hindi</option>
+      <option value="Hungarian">Hungarian</option>
+      <option value="Icelandic">Icelandic</option>
+      <option value="Indonesian">Indonesian</option>
+      <option value="Italian">Italian</option>
+      <option value="Japanese">Japanese</option>
+      <option value="Kannada">Kannada</option>
+      <option value="Korean">Korean</option>
+      <option value="Latvian">Latvian</option>
+      <option value="Lithuanian">Lithuanian</option>
+      <option value="Malay">Malay</option>
+      <option value="Malayalam">Malayalam</option>
+      <option value="Marathi">Marathi</option>
+      <option value="Norwegian">Norwegian</option>
+      <option value="Persian">Persian</option>
+      <option value="Polish">Polish</option>
+      <option value="Portuguese(Brazil)">Portuguese  (Brazil)</option>
+      <option value="Portuguese(Portugal)">Portuguese  (Portugal)</option>
+      <option value="Punjabi">Punjabi</option>
+      <option value="Romanian">Romanian</option>
+      <option value="Russian">Russian</option>
+      <option value="Serbian">Serbian</option>
+      <option value="Slovak">Slovak</option>
+      <option value="Slovenian">Slovenian</option>
+      <option value="Spanish">Spanish</option>
+      <option value="Swahili">Swahili</option>
+      <option value="Swedish">Swedish</option>
+      <option value="Tamil">Tamil</option>
+      <option value="Telugu">Telugu</option>
+      <option value="Thai">Thai</option>
+      <option value="Turkish">Turkish</option>
+      <option value="Ukrainian">Ukrainian</option>
+      <option value="Urdu">Urdu</option>
+      <option value="Vietnamese">Vietnamese</option>
+      <option value="Zulu">Zulu</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <%= form.label :notes, class: "usa-label" %>
+    <div class="usa-hint font-sans-2xs">
+      Do not include PII content in this field.
+    </div>
+    <%= form.text_area :notes, class: "usa-textarea", placeholder: "Consider including contact information" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :service, class: "usa-label" %>
+    <div class="usa-hint font-sans-2xs">
+      Optionally, this Digital Product
+      can be associated with a
+      <%= link_to "Service", admin_services_path, target: "_blank" %>.
+    </div>
+    <%= form.select :service_id, options_for_select(Service.all.map { |s| [s.name, s.id] }), { prompt: "Which Service?" }, { class: "usa-select" } %>
+  </div>
+
+  <p>
+    <%= form.submit class: "usa-button" %>
+  </p>
+<% end %>

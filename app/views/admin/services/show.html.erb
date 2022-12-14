@@ -1,0 +1,345 @@
+<% content_for :navigation_title do %>
+  <% if service_permissions?(service: @service) %>
+  <div class="float-right">
+    <%= link_to edit_admin_service_path(@service), class: "usa-button usa-button-inverted" do %>
+    <i class="fa fa-pencil-alt"></i>
+    Edit
+    <% end %>
+  </div>
+  <% end %>
+
+  Service: <%= @service.name %>
+<% end %>
+
+<p>
+  <%= link_to admin_services_path do %>
+  <i class="fa fa-arrow-circle-left"></i>
+  Back to Services
+  <% end %>
+</p>
+
+<%= render 'admin/services/nav', service: @service %>
+
+<br>
+
+<div class="grid-row grid-gap-lg">
+  <div class="desktop:grid-col-8">
+
+    <%= render 'admin/services/step_indicator', service: @service %>
+
+    <% if @service.hisp? %>
+    <div class="usa-alert usa-alert--info">
+      <div class="usa-alert__body">
+        <p class="usa-alert__text">
+          This service is designated as a
+          <a href="https://www.performance.gov/cx/agencies/" target="_blank" rel="noopener">HISP service</a>.
+        </p>
+      </div>
+    </div>
+    <% end %>
+
+    <p>
+      <strong>Organization</strong>
+      <br>
+      <%= link_to @service.organization.name, admin_organization_path(@service.organization) %>
+    </p>
+    <p hidden>
+      <strong>Bureau</strong>
+      <br>
+      <%= @service.bureau_id %>
+    </p>
+    <p>
+      <strong>Office</strong>
+      <br>
+      <%= @service.office %>
+    </p>
+    <p>
+      <strong>Service Provider</strong>
+      <br>
+      <%= @service.service_provider ? link_to_if(service_manager_permissions?, @service.service_provider.name, admin_service_provider_path(@service.service_provider), target: "_blank", rel: "noopener") : nil %>
+    </p>
+    <p>
+      <strong>Name</strong>
+      <br>
+      <%= @service.name %>
+    </p>
+    <p>
+      <strong>Description</strong>
+      <br>
+      <%= @service.description? ? to_markdown(@service.description) : "empty" %>
+    </p>
+
+    <p>
+      <strong>Service type</strong>
+      <br>
+      <%= @service.kind %>
+    </p>
+
+    <div class="well">
+      <p>
+        <strong>Is this a designated High-impact Service?</strong>
+        <br>
+        <br>
+        <%= @service.hisp? ? "✅" : "❌" %>
+      </p>
+      <div>
+        <strong>Transactional service?</strong>
+        <p>
+          <%= @service.transactional? ? "✅" : "❌" %>
+        </p>
+      </div>
+      <p>
+        <strong>Service contacts</strong>
+        <% if @service.service_managers.present? %>
+          <ul class="usa-list">
+            <% @service.service_managers.each do | manager | %>
+              <li>
+                <%= link_to manager.try(:email), admin_user_path(manager) %>
+              </li>
+              <% end %>
+          </ul>
+        <% else %>
+          <div class="usa-alert usa-alert--warning">
+            <div class="usa-alert__body">
+              <p class="usa-alert__text">
+                No Service contacts have been defined.
+              </p>
+            </div>
+          </div>
+        <% end %>
+      </p>
+
+      <span class="usa-tag">
+        for HISP-designated Services
+      </span>
+
+      <p>
+        <strong>Why did you select this service for priority designation?</strong>
+        <br>
+        <% if @service.justification_text.present? %>
+          <%= to_markdown(@service.justification_text) %>
+            <% else %>
+              No text
+              <% end %>
+      </p>
+    </div>
+
+    <p>
+      <strong>Is this a Digital Service?</strong>
+      <br>
+      <br>
+      <%= @service.digital_service? ? "✅" : "❌" %>
+    </p>
+    <p>
+      <strong>Where customers interact (Channels)</strong>
+      <br>
+      <%= to_markdown(@service.where_customers_interact) %>
+        <%= @service.channel_list %>
+    </p>
+    <p>
+      <strong>Why this service is not offered digitally</strong>
+      <br>
+      <%= @service.non_digital_explanation? ? @service.non_digital_explanation : "empty" %>
+    </p>
+
+    <p>
+      <strong>Service Homepage URL</strong>
+      <br>
+      <%= link_to @service.homepage_url, @service.homepage_url %>
+    </p>
+    <p>
+      <strong>Service URL</strong>
+      <br>
+      <%= link_to @service.url, @service.url %>
+    </p>
+    <p>
+      <strong>What is the estimated annual customer volume?</strong>
+      <br>
+      <%= @service.estimated_annual_volume_of_customers %>
+    </p>
+    <p>
+      <strong>Notes</strong>
+      <br>
+      <%= to_markdown(@service.notes) || "empty" %>
+    </p>
+
+  </div>
+  <div class="desktop:grid-col-4">
+    <% if service_manager_permissions? && !@service.created? && @service.submitted? && !@service.approved? %>
+    <p>
+      <%= link_to "Approve this service", approve_admin_service_path(@service), class: "usa-button full-width", method: :post %>
+    </p>
+    <% end %>
+
+    <% if service_permissions?(service: @service) && !@service.created? && !@service.submitted? && @service.approved? %>
+    <p>
+      <%= link_to "Verify this service can be published", verify_admin_service_path(@service), class: "usa-button full-width", method: :post %>
+    </p>
+    <% end %>
+
+    <% if @service.created? && !@service.submitted? && !@service.approved? %>
+    <div class="">
+      <%= link_to "Submit this Service for OMB review", submit_admin_service_path(@service), class: "usa-button full-width", method: :post %>
+    </div>
+    <% end %>
+
+    <% if service_permissions?(service: @service) && !@service.created? && !@service.submitted? && !@service.approved? && @service.verified? %>
+    <div class="margin-top-2">
+      <%= link_to archive_admin_service_path(@service), class: "usa-button full-width", method: :post do %>
+        <i class="fa fa-archive"></i>
+        &nbsp;
+        Archive
+      <% end %>
+    </div>
+    <% end %>
+
+    <% if service_manager_permissions? %>
+    <div class="margin-top-2">
+      <%= link_to reset_admin_service_path(@service), class: "usa-button usa-button--secondary full-width", method: :post do %>
+        <span class="fa fa-backward"></span>
+        &nbsp;
+        Reset
+      <% end %>
+    </div>
+    <% end %>
+
+    <% if admin_permissions? %>
+    <div class="margin-top-2">
+      <%= link_to omb_cx_reporting_admin_service_path(@service), class: "usa-button usa-button--outline width-full" do %>
+        <i class="fa fa-pencil-alt"></i>
+        OMB Quarterly Reporting
+      <% end %>
+    </div>
+    <% end %>
+
+    <% if service_manager_permissions? %>
+    <div class="margin-top-2">
+      <%= link_to versions_admin_service_path(@service), class: "usa-button usa-button--outline width-full" do %>
+        <span class="fa fa-list"></span>
+        &nbsp;
+        View update history
+      <% end %>
+    </div>
+    <% end %>
+
+    <div class="well">
+      <div class="font-sans-2xs">
+        This information is for
+        <a href="https://www.performance.gov/cx/" target="_blank" rel="noopener">performance.gov</a>
+        reporting purposes.
+      </div>
+      <p>
+        <strong>Department</strong>
+        <br>
+        <%= @service.department %>
+      </p>
+      <p>
+        <strong>Bureau</strong>
+        <br>
+        <%= @service.bureau %>
+      </p>
+      <p>
+        <strong>Service abbreviation</strong>
+        <br>
+        <%= @service.service_abbreviation %>
+      </p>
+      <p>
+        <strong>Service slug</strong>
+        <br>
+        <%= @service.service_slug %>
+      </p>
+    </div>
+
+    <% if service_permissions?(service: @service) %>
+    <div class="well">
+      <div class="tags-div">
+        <%= render 'admin/services/tags', service: @service %>
+      </div>
+    </div>
+    <% end %>
+
+  </div>
+</div>
+
+<% all_stages = @service.service_stages %>
+<% first_stage = all_stages.first %>
+<% last_stage = all_stages.last %>
+
+<div class="" hidden>
+  <h4>
+    Uptake
+  </h4>
+  How many people made it to the final, successful end state of this service.
+  <h2>
+  <% if first_stage.present? %>
+    <%= takeup_percentage = ((last_stage.total_eligible_population.to_f / first_stage.total_eligible_population.to_f) * 100).round(2) %>%
+  <% end %>
+  </h2>
+</div>
+
+<div class="well">
+  <h4>
+    Forms
+  </h4>
+  <div>
+    <% @forms = @service.forms.order(:name) %>
+    <% if @forms.present? %>
+    <ul>
+      <% @forms.each do |f| %>
+      <li>
+        <%= link_to admin_form_path(f) do %>
+          <%= f.name %>
+        <% end %>
+      </li>
+      <% end %>
+    </ul>
+    <% else %>
+      <div class="usa-alert usa-alert--info">
+        <div class="usa-alert__body">
+          <p class="usa-alert__text">
+            No Forms exist for this Service.
+            <%= link_to "Learn more", admin_forms_path %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% @omb_cx_reporting_collections = @service.omb_cx_reporting_collections.includes(:collection).order("collections.year", "collections.quarter") %>
+
+<div class="well">
+  <h4>
+    Data Collections
+  </h4>
+  <% if @omb_cx_reporting_collections.present? %>
+  <table class="usa-table">
+    <thead>
+      <tr>
+        <th>Fiscal year</th>
+        <th>Quarter</th>
+        <th>Collection name</th>
+        <th>Service name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @omb_cx_reporting_collections.each do |omb_cx_reporting_collection| %>
+      <tr>
+        <td>
+          <%= omb_cx_reporting_collection.collection.year %>
+        </td>
+        <td>
+          <%= omb_cx_reporting_collection.collection.quarter %>
+        </td>
+        <td>
+          <%= link_to omb_cx_reporting_collection.collection.name, admin_collection_path(omb_cx_reporting_collection.collection) %>
+        </td>
+        <td>
+          <%= link_to omb_cx_reporting_collection.service.name, admin_omb_cx_reporting_collection_path(omb_cx_reporting_collection) %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% end %>
+</div>

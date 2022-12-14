@@ -1,0 +1,57 @@
+<%= form_with(model: question_option, url: (question_option.persisted? ? admin_form_question_question_option_path(question.form, question, question_option) : admin_form_question_question_options_path(question.form, question)), remote: true, data: { turbo: false }) do |form| %>
+  <% if question_option.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(question_option.errors.count, "error") %> prohibited this question_option from being saved:</h2>
+
+      <ul class="usa-list">
+      <% question_option.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :question_id, value: @question.id %>
+
+  <div class="field">
+    <%= form.label :text, class: "usa-label" %>
+    <%= form.text_area :text, class: "usa-input question-option-text", rows: 5 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :value, class: "usa-label" %>
+    <%= form.text_field :value, class: "usa-input" %>
+  </div>
+
+  <p>
+    <%= form.submit class: "usa-button question-option-save" %>
+
+  <% if question_option.persisted? %>
+    <%= link_to admin_form_question_question_option_path(form, question, question_option), class: "usa-button bg-red float-right", method: :delete, data: { confirm: 'Are you sure?' } do %>
+      <i class="fa fa-trash"></i>
+      Delete
+    <% end %>
+  <% end %>
+  </p>
+<% end %>
+<script>
+  $('.question-option-save').on("click", function(event) {
+      event.preventDefault();
+      var form = $(this).parents('form:first');
+      var inputs = $(form).find(".usa-input");
+      var option_text = $($(inputs[0])).val();
+      var option_value = $($(inputs[1])).val();
+      option_text = $.trim(option_text)
+      if (option_text.length == 0) {
+        alert("Please enter a value for question option text!");
+        return false;
+      }
+      $(".question-option-edit").hide();
+      $(".question-option-view").show();
+      $.ajax({
+        type: "POST",
+        url: $(form).prop("action"),
+        data: { question_option: { text: option_text, value: option_value } }
+      });
+  });
+</script>

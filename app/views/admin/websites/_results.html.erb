@@ -1,0 +1,53 @@
+<h3>
+  Displaying <%= pluralize(@websites.size, "Website") %>
+</h3>
+<p>
+  <% unless params[:action] == "review" %>
+    <% if params[:all] %>
+      <%= link_to "View Active sites", "?active=1" %>
+      <small>
+        (<%= Website::ACTIVE_PRODUCTION_STATUSES.to_sentence %>)
+      </small>
+    <% else %>
+      <%= link_to "View All sites", "?all=1" %>
+      <small>
+        (also includes <%= (Website::PRODUCTION_STATUSES.keys - Website::ACTIVE_PRODUCTION_STATUSES).to_sentence %>)
+      </small>
+    <% end %>
+  <% end %>
+</p>
+<div class="usa-table-container--scrollable">
+  <table class="usa-table" style="overflow-x: scroll;">
+    <thead>
+      <tr>
+        <th
+            data-sortable
+            scope="col"
+           >Domain</th>
+        <th data-sortable scope="col">Status</th>
+        <th data-sortable scope="col">Office</th>
+        <th data-sortable scope="col">Sub-office</th>
+        <th data-sortable scope="col">Primary Contact</th>
+        <th data-sortable scope="col">Public Email</th>
+        <th>Tags</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @websites.order(:production_status).each do |website| %>
+        <tr>
+          <td><%= link_to(website.domain, admin_website_path(website)) %></td>
+          <td data-sort-value="<%= website_status_sort_values[website.production_status] %>">
+            <span class="usa-tag <%= website_status_label_tags(website.production_status) %>">
+              <%= website.production_status %>
+            </span>
+          </td>
+          <td><%= website.office %></td>
+          <td><%= website.sub_office %></td>
+          <td><%= website.site_owner_email %></td>
+          <td><%= website.contact_email %></td>
+          <td><%= website.tag_list %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

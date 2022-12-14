@@ -1,0 +1,27 @@
+<% content_for :navigation_title do %>
+  Review Websites
+  <%= link_to new_admin_website_path, class: "usa-button usa-button-inverted float-right" do %>
+    <i class="fa fa-plus-circle"></i>
+    New Website
+  <% end %>
+<% end %>
+
+<p>
+  <%= link_to admin_websites_path do %>
+    <i class="fa fa-arrow-circle-left"></i>
+    Back to Websites
+  <% end %>
+</p>
+
+<div class="usa-alert usa-alert--info">
+  <div class="usa-alert__body">
+    <p class="usa-alert__text">
+      Displaying Websites where the status = 'newly_requested'
+    </p>
+  </div>
+</div>
+
+<div class="search-results">
+  <br>
+  <%= render 'results' %>
+</div>

@@ -1,0 +1,481 @@
+<% content_for :navigation_title do %>
+Website Status card for <%= @website.domain %>
+<% end %>
+<p>
+  <%= link_to admin_website_path(@website) do %>
+  <i class="fa fa-arrow-circle-left"></i>
+  Back to Website
+  <% end %>
+</p>
+
+<div class="usa-summary-box" role="complementary">
+  <div class="usa-summary-box__body">
+    <h4 class="usa-summary-box__heading"></h4>
+    <div class="usa-summary-box__text">
+      <div class="usa-alert usa-alert--info usa-alert--slim">
+        <div class="usa-alert__body">
+          <p class="usa-alert__text">
+            This website statuscard is exploring how to automate
+            the identification and testing of objective GSA and federal website guidelines.
+            A more comprehensive list of 21st Century IDEA requirements is published on
+            <a href="https://digital.gov/resources/21st-century-integrated-digital-experience-act/">digital.gov</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div>
+  <%= render 'components/site_scanner_results' %>
+</div>
+
+<br>
+<br>
+
+<h2>
+  Website Status card
+</h2>
+
+<div class="grid-row grid-gap">
+  <div class="tablet:grid-col-12">
+    <div
+      class="usa-summary-box"
+      role="region"
+      aria-labelledby="summary-box-key-information">
+      <div class="usa-summary-box__body">
+        <h3 class="usa-summary-box__heading" id="summary-box-key-information">
+          Supporting usable and compliant websites
+        </h3>
+        <div class="usa-summary-box__text">
+          <p>
+            The 21st Century Integrated Digital Experience Act (21st Century IDEA Act), Public Law 115-336, requires federal executive branch agencies to improve web governance, modernize websites and digital services (3a) and annually review all websites and digital services to ensure compliance with web modernization requirements (3b). This tracker explains the criteria to meet the requirements of 21st Century IDEA and other laws and policies related to managing federal public websites and digital services.
+          </p>
+          <%= link_to "https://touchpoints.app.cloud.gov/touchpoints/1fc9c962/", class: "usa-button usa-button--inverse", target: "_blank", rel: "noopener" do %>
+            <i class="fa fa-info-circle"></i>
+            Ask a question or provide feedback
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="grid-row grid-gap">
+  <div class="tablet:grid-col-3">
+    <nav aria-label="Secondary navigation" class="margin-top-4">
+      <ul class="usa-sidenav" id="statuscard-sidenav">
+        <li class="usa-sidenav__item">
+          <a href="#accessibilty" class="">Accessibilty</a>
+        </li>
+        <li class="usa-sidenav__item">
+          <a href="#analytics" class="">Analytics</a>
+        </li>
+        <li class="usa-sidenav__item">
+          <a href="#content" class="">Content</a>
+        </li>
+        <li class="usa-sidenav__item">
+          <a href="#design" class="">Design/UX</a>
+        </li>
+        <li class="usa-sidenav__item">
+          <a href="#governance" class="">Governance</a>
+        </li>
+        <li class="usa-sidenav__item">
+          <a href="#privacy" class="">Privacy</a>
+        </li>
+        <li class="usa-sidenav__item">
+          <a href="#search" class="">Search</a>
+        </li>
+        <li class="usa-sidenav__item">
+          <a href="#security" class="">Security</a>
+        </li>
+        <li class="usa-sidenav__item">
+          <a href="#trust" class="">Trust</a>
+        </li>
+        <li class="usa-sidenav__item">
+          <a href="#feedback" class="">User Feedback</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="tablet:grid-col-9">
+
+    <div class="usa-prose margin-top-4 margin-bottom-2">
+      <h2 id="accessibilty">Accessibilty</h2>
+      <p>
+        Description: Accessible to and usable by individuals with disabilities, as defined by Section 508 of the Rehabilitation Act.
+      </p>
+      <p>
+        Accessbility is to be assessed by each team using their tools of choice.
+        WAVE is a good way to get started.
+      </p>
+    </div>
+    <div class="usa-accordion usa-accordion--bordered" aria-multiselectable="true">
+      <h4 class="usa-accordion__heading">
+        <button id="example-button0" class="usa-accordion__button navy" aria-expanded="false" aria-controls="accessibility-1">
+          WebAim
+        </button>
+      </h4>
+      <div id="accessibility-1" class="usa-accordion__content usa-prose navy" hidden="">
+        <p>
+          Enter your website domain into
+          <a href="https://wave.webaim.org/report#/<%= @website.domain %>" target="_blank" re="noopener">Wave</a> by WebAim. This will initiate an accessiblity scan.
+        </p>
+        <p>
+          Then note the findings in your product backlog.
+        </p>
+      </div>
+    </div>
+    <div class="usa-prose margin-top-4 margin-bottom-2">
+      <h2 id="analytics"> Analytics</h2>
+      <p>
+        Description: Data-informed analysis influences management and development decisions
+      </p>
+    </div>
+    <div class="usa-accordion usa-accordion--bordered" aria-multiselectable="true">
+      <h4 class="usa-accordion__heading">
+        <button id="analytics-button0" class="usa-accordion__button navy" aria-expanded="false" aria-controls="analytics-0">
+          Guidance
+        </button>
+      </h4>
+      <div id="analytics-0" class="usa-accordion__content usa-prose navy" hidden="">
+        <p>
+          All GSA public-facing websites must participate in the federal
+          <a href="http://digital.gov/services/dap/">Digital Analytics Program (DAP)</a>
+          by including the DAP tracking code on your website.
+          All GSA public-facing websites should
+          review site usage and search metrics at least monthly, and use the data to make informed decisions on how to continuously improve your site and exceed customer expectations.
+        </p>
+        <p>
+          In addition to DAP, GSA sites have access to the free standard version of Google Analytics. GSA program offices should use
+          <a href="https://support.google.com/analytics/answer/1008015?hl=en">this version of Google Analytics</a> on your external and internal websites, if you need data capabilities above and beyond what DAP offers.
+        </p>
+      </div>
+      <h4 class="usa-accordion__heading">
+        <button id="analytics-button0" class="usa-accordion__button navy" aria-expanded="false" aria-controls="analytics-1">
+          Digital Analytics Program (DAP)
+        </button>
+      </h4>
+      <div id="analytics-1" class="usa-accordion__content usa-prose navy" hidden="">
+        <h5>Guidance for Success</h5>
+        <p>
+          In addition to DAP, GSA sites have access to the free standard version of Google Analytics. GSA program offices should use
+          <a href="https://support.google.com/analytics/answer/1008015?hl=en">this version of Google Analytics</a> on your external and internal websites, if you need data capabilities above and beyond what DAP offers.
+        </p>
+      </div>
+      <h4 class="usa-accordion__heading">
+        <button id="analytics-button1" class="usa-accordion__button green" aria-expanded="false" aria-controls="analytics-2">
+          Feedback Analytics
+        </button>
+      </h4>
+      <div id="analytics-2" class="usa-accordion__content usa-prose green" hidden="">
+        <p>
+          Generally, the <a href="https://pra.digital.gov/">Paperwork Reduction Act (PRA)</a> imposes procedural requirements on agencies that wish to collect information from the public. Any GSA office that wants to collect information or
+          feedback from customers (including via website surveys that ask <a href="https://www.performance.gov/cx/A11-Companion-CX-Metrics-2019.pdf">standardized questions, such as those identified on performance.gov</a>) may have to comply with
+          the PRA. <br><br>Staff should work with <a
+            href="https://insite.gsa.gov/services-and-offices/office-of-governmentwide-policy/office-of-acquisition-policy/governmentwide-acquisition-policy/regulatory-secretariat-regsec-division#InformationCollectionsPRA">GSA’s Regulatory
+            Secretariat Division</a> to obtain required approvals. For website surveys, GSA may ask a single, open-ended question (such as 'Please let us know what you think of this website' or 'Please give us your feedback' or 'Was this page
+          helpful?') without prior approval.<br></p>
+        <h6>Resources</h6>
+        <ul>
+          <li>Qualtrics</li>
+          <li>Touchpoints</li>
+        </ul>
+        <p></p>
+      </div>
+    </div>
+    <div class="usa-prose margin-top-4 margin-bottom-2">
+      <h2 id="content">Content</h2>
+      <p>
+        Description: Content team is empowered to edit content so it meet user needs and work well on the web
+      </p>
+    </div>
+    <div class="usa-accordion usa-accordion--bordered" aria-multiselectable="true">
+      <h4 class="usa-accordion__heading">
+        <button id="mobile-button0" class="usa-accordion__button navy" aria-expanded="false" aria-controls="mobile-0">
+          ???
+        </button>
+      </h4>
+      <div id="mobile-0" class="usa-accordion__content usa-prose navy" hidden="">
+        <p>
+          ???
+        </p>
+      </div>
+    </div>
+    <div class="usa-prose margin-top-4 margin-bottom-2">
+      <h2 id="privacy">Privacy</h2>
+      <p>
+        <br>
+        For additional details, see <a href=""></a>
+      </p>
+    </div>
+    <div class="usa-accordion usa-accordion--bordered" aria-multiselectable="true">
+      <h4 class="usa-accordion__heading">
+        <button id="privacy-button0" class="usa-accordion__button navy" aria-expanded="false" aria-controls="privacy-0">
+          ?????
+        </button>
+      </h4>
+      <div id="privacy-0" class="usa-accordion__content usa-prose navy" hidden="">
+        <h5>Guidance for Success</h5>
+        <p></p>
+      </div>
+    </div>
+    <div class="usa-prose margin-top-4 margin-bottom-2">
+      <h2 id="design">Design/UX</h2>
+      <p>
+        Description: Site is consistent in appearance, modern, designed around user needs, and fully functional and usable on common mobile devices
+      </p>
+    </div>
+    <div class="usa-accordion usa-accordion--bordered" aria-multiselectable="true">
+      <h4 class="usa-accordion__heading">
+        <button id="design-button" class="usa-accordion__button navy" aria-expanded="false" aria-controls="design-1">
+          ???
+        </button>
+      </h4>
+      <div id="design-1" class="usa-accordion__content usa-prose navy" hidden="">
+        <p>
+          ???
+        </p>
+      </div>
+    </div>
+    <div class="usa-prose margin-top-4 margin-bottom-2">
+      <h2 id="security">5 - Security</h2>
+      <p>
+        <br>
+        For additional details, see <a href=""></a>
+      </p>
+    </div>
+    <div class="usa-accordion usa-accordion--bordered" aria-multiselectable="true">
+      <h4 class="usa-accordion__heading">
+        <button id="security-button0" class="usa-accordion__button navy" aria-expanded="false" aria-controls="security-0">
+          HTTPS
+        </button>
+      </h4>
+      <div id="security-0" class="usa-accordion__content usa-prose navy" hidden="">
+        <h5>Guidance for Success</h5>
+        <p></p>
+      </div>
+      <h4 class="usa-accordion__heading">
+        <button id="security-button1" class="usa-accordion__button green" aria-expanded="false" aria-controls="security-1">
+          HTTP Strict Transport Security (HSTS)
+        </button>
+      </h4>
+      <div id="security-1" class="usa-accordion__content usa-prose green" hidden="">
+        <h5>Guidance for Success</h5>
+        <p></p>
+      </div>
+      <h4 class="usa-accordion__heading">
+        <button id="security-button2" class="usa-accordion__button red" aria-expanded="false" aria-controls="security-2">
+          HSTS Preloaded
+        </button>
+      </h4>
+      <div id="security-2" class="usa-accordion__content usa-prose red" hidden="">
+        <h5>Guidance for Success</h5>
+        <p></p>
+        <a href="#security-button4"><button id="next-security-2" class="usa-button usa-button--outline margin-top-2">Jump to next issue</button></a>
+      </div>
+      <h4 class="usa-accordion__heading">
+        <button id="security-button3" class="usa-accordion__button green" aria-expanded="false" aria-controls="security-3">
+          Outdated Cipher Suites
+        </button>
+      </h4>
+      <div id="security-3" class="usa-accordion__content usa-prose green" hidden="">
+        <h5>Guidance for Success</h5>
+        <p>Disable RC4 and 3DES ciphers and SSLv2 and SSLv3 protocols</p>
+      </div>
+      <h4 class="usa-accordion__heading">
+        <button id="security-button4" class="usa-accordion__button red" aria-expanded="false" aria-controls="security-4">
+          DMARC Policy
+        </button>
+      </h4>
+      <div id="security-4" class="usa-accordion__content usa-prose red" hidden="">
+        <h5>Guidance for Success</h5>
+        <p>Have a domain-level DMARC policy of “reject” to provide the strongest protection against spoofed email.</p>
+        <a href="#appendix-1-button2"><button id="next-security-4" class="usa-button usa-button--outline margin-top-2">Jump to next issue</button></a>
+      </div>
+      <h4 class="usa-accordion__heading">
+        <button id="security-button5" class="usa-accordion__button green" aria-expanded="false" aria-controls="security-5">
+          Staging Site
+        </button>
+      </h4>
+      <div id="security-5" class="usa-accordion__content usa-prose green" hidden="">
+        <h5>Guidance for Success</h5>
+        <p>Have a domain-level DMARC policy of “reject” to provide the strongest protection against spoofed email.</p>
+      </div>
+    </div>
+    <div class="usa-prose margin-top-4 margin-bottom-2">
+      <h2 id="information_quality">8 - Information Quality</h2>
+      <p>
+        <br>
+        For additional details, see <a href=""></a>
+      </p>
+    </div>
+    <div class="usa-accordion usa-accordion--bordered" aria-multiselectable="true">
+      <h4 class="usa-accordion__heading">
+        <button id="information_quality-button0" class="usa-accordion__button navy" aria-expanded="false" aria-controls="information_quality-0">
+          Linking Policy
+        </button>
+      </h4>
+      <div id="information_quality-0" class="usa-accordion__content usa-prose navy" hidden="">
+        <h5>Guidance for Success</h5>
+        <p></p>
+        <p>You may link to information created and maintained by other public and private organizations, as well as other SSORs and federal entities, according to legal and ethical considerations, and the requirements outlined in this Order.</p>
+        <p>Every GSA domain must develop and post a clear and comprehensive policy for linking to other websites. This policy must include criteria or guidelines for selecting and maintaining external links. At a minimum, these policies must be
+          available from a “Web Policies and Important Links” page. The GSA.gov linking policy presents the policy, disclaimers, and link notifications of GSA.gov, and can serve as a model for all GSA websites.</p>
+        <p>Do not duplicate information maintained elsewhere; link to the source.</p>
+        <p>Sometimes, this means linking to related non-federal websites. If you link to non-federal sites, remind visitors that those websites do not necessarily operate under the same laws, regulations, and policies as federal websites by clearly
+          identifying 'non-government' links.</p>
+        <p>Consider the following, when developing criteria for, or linking to, external sites:</p>
+        <ul>
+          <li>Is the link appropriate? Is the content mission-related? Is there a conflict of interest?</li>
+          <li>What value does it add for GSA’s customers?</li>
+          <li>Could a link to a commercial site give the appearance of favoritism or bias? If more than one commercial site offers similar products, information, or services, then you must either link to all sites, or none. You may link to
+            commercial third-party websites if GSA has a formal relationship with the organization or business that operates the website, to increase awareness of the GSA activity. GSA must treat all business partners equally.</li>
+          <li>Does a site pose potential privacy issues because they collect PII?</li>
+          <li>Would it be easy for your team to monitor and validate the linked information on a regular basis, to ensure it remains relevant for GSA customers?</li>
+          <li>Have you consulted with the Office of General Counsel (OGC) to research and resolve any potential copyright issues (i.e., a news site with an article about a GSA program)? Contact OSC at oscweb@gsa.gov for guidance.</li>
+        </ul>
+        <p></p>
+      </div>
+      <h4 class="usa-accordion__heading">
+        <button id="information_quality-button1" class="usa-accordion__button green" aria-expanded="false" aria-controls="information_quality-1">
+          Mark External Links
+        </button>
+      </h4>
+      <div id="information_quality-1" class="usa-accordion__content usa-prose green" hidden="">
+        <h5>Guidance for Success</h5>
+        <p></p>
+        <p>US Web Design System provides an icon (<svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+            <use xlink:href="uswds-2.11.1/img/sprite.svg#launch"></use>
+          </svg>) to help sites denote links that point outside of government domains.</p>
+        <p>So as not to burden content writers, a simple script can dynamically add the external link icon upon page load.</p>
+        <p></p>
+      </div>
+    </div>
+    <div class="usa-prose margin-top-4 margin-bottom-2">
+      <h2 id="section-508">9 - Section 508 Accessibility</h2>
+      <p>Before publication or release: </p>
+      <ul>
+        <li>Test every new piece of content (including web pages, documents, PDFs, videos, etc.) for accessibility.</li>
+        <li>Test new functionality on your websites and apps for accessibility via screen readers and other assistive technologies.</li>
+        <li>Quickly fix accessibility issues when discovered.</li>
+      </ul>
+      <br>
+      For additional details, see <a href=""></a>
+      <p></p>
+    </div>
+    <div class="usa-accordion usa-accordion--bordered" aria-multiselectable="true">
+      <h4 class="usa-accordion__heading">
+        <button id="section-508-button0" class="usa-accordion__button navy" aria-expanded="false" aria-controls="section-508-0">
+
+        </button>
+      </h4>
+      <div id="section-508-0" class="usa-accordion__content usa-prose navy" hidden="">
+        <h5>Guidance for Success</h5>
+        <p></p>
+      </div>
+      <h4 class="usa-accordion__heading">
+        <button id="section-508-button1" class="usa-accordion__button green" aria-expanded="false" aria-controls="section-508-1">
+
+        </button>
+      </h4>
+      <div id="section-508-1" class="usa-accordion__content usa-prose green" hidden="">
+        <h5>Guidance for Success</h5>
+        <p></p>
+      </div>
+    </div>
+    <div class="usa-prose margin-top-4 margin-bottom-2">
+      <h2 id="records-management">10 - Records Management</h2>
+      <p></p>
+      <p>You must maintain your digital content and services in accordance with the standards described in applicable records laws, regulations, and management policies. One records management policy is to maintain a “web records schedule” for the
+        content on your site. You may model it after the Web Records schedule for GSA.gov but it should address the content and schedule specific to your site. </p>
+      <p>Find GSA-specific records management guidance on InSite. If you need additional guidance, contact <a href="mailto:Records@gsa.gov">Records@gsa.gov</a>.</p>
+      <br>
+      For additional details, see <a href=""></a>
+      <p></p>
+    </div>
+    <div class="usa-accordion usa-accordion--bordered" aria-multiselectable="true">
+      <h4 class="usa-accordion__heading">
+        <button id="records-management-button0" class="usa-accordion__button navy" aria-expanded="false" aria-controls="records-management-0">
+
+        </button>
+      </h4>
+      <div id="records-management-0" class="usa-accordion__content usa-prose navy" hidden="">
+        <h5>Guidance for Success</h5>
+        <p></p>
+      </div>
+      <h4 class="usa-accordion__heading">
+        <button id="records-management-button1" class="usa-accordion__button green" aria-expanded="false" aria-controls="records-management-1">
+
+        </button>
+      </h4>
+      <div id="records-management-1" class="usa-accordion__content usa-prose green" hidden="">
+        <h5>Guidance for Success</h5>
+        <p></p>
+      </div>
+    </div>
+    <div class="usa-prose margin-top-4 margin-bottom-2">
+      <h2 id="plain-language">12 - Plain Language</h2>
+      <p></p>
+      <p>You must maintain your digital content and services in accordance with the standards described in applicable records laws, regulations, and management policies. One records management policy is to maintain a “web records schedule” for the
+        content on your site. You may model it after the Web Records schedule for GSA.gov but it should address the content and schedule specific to your site. </p>
+      <p>Find GSA-specific records management guidance on InSite. If you need additional guidance, contact <a href="mailto:Records@gsa.gov">Records@gsa.gov</a>.</p>
+      <br>
+      For additional details, see <a href=""></a>
+      <p></p>
+    </div>
+    <div class="usa-accordion usa-accordion--bordered" aria-multiselectable="true">
+      <h4 class="usa-accordion__heading">
+        <button id="plain-language-button0" class="usa-accordion__button navy" aria-expanded="false" aria-controls="plain-language-0">
+
+        </button>
+      </h4>
+      <div id="plain-language-0" class="usa-accordion__content usa-prose navy" hidden="">
+        <h5>Guidance for Success</h5>
+        <p></p>
+      </div>
+      <h4 class="usa-accordion__heading">
+        <button id="plain-language-button1" class="usa-accordion__button green" aria-expanded="false" aria-controls="plain-language-1">
+
+        </button>
+      </h4>
+      <div id="plain-language-1" class="usa-accordion__content usa-prose green" hidden="">
+        <h5>Guidance for Success</h5>
+        <p></p>
+      </div>
+    </div>
+    <div class="usa-prose margin-top-4 margin-bottom-2">
+      <h2 id="search">17 - Site Search</h2>
+      <p></p>
+      <p>Every GSA website or digital service intended for use by the public must have a search box. This is required by <a href="https://www.congress.gov/bill/115th-congress/house-bill/5759/text">Public Law 115-336, Section 3.a.4</a>.</p>
+      <br>
+      For additional details, see <a href=""></a>
+      <p></p>
+    </div>
+    <div class="usa-accordion usa-accordion--bordered" aria-multiselectable="true">
+      <h4 class="usa-accordion__heading">
+        <button id="site-search-button0" class="usa-accordion__button navy" aria-expanded="false" aria-controls="site-search-0">
+          Sitemap.xml
+        </button>
+      </h4>
+      <div id="site-search-0" class="usa-accordion__content usa-prose navy" hidden="">
+        <h5>Guidance for Success</h5>
+        <p>Publish <a href="https://search.gov/manual/sitemaps.html">XML sitemaps</a> for each domain and subdomain.</p>
+      </div>
+      <h4 class="usa-accordion__heading">
+        <button id="site-search-button1" class="usa-accordion__button green" aria-expanded="false" aria-controls="site-search-1">
+          Has Search
+        </button>
+      </h4>
+      <div id="site-search-1" class="usa-accordion__content usa-prose green" hidden="">
+        <h5>Guidance for Success</h5>
+        <p>If search capabilities are not available out of the box with your site, Search.gov is a great (and free) resource. Publicly accessible websites that don’t have on-site search should contact Search.gov (search@support.digitalgov.gov) to
+          get started. See also the Search,gov Launch Guide. </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+<br>

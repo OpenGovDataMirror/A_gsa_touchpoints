@@ -1,0 +1,11 @@
+<% content_for :navigation_title do %>
+  New Organization
+<% end %>
+<p>
+  <%= link_to admin_organizations_path do %>
+    <i class="fa fa-arrow-circle-left"></i>
+    Back to Organizations
+  <% end %>
+</p>
+
+<%= render 'form', organization: @organization %>

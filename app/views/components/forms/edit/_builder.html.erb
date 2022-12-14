@@ -1,0 +1,360 @@
+<% @instruction_text_limit = 1500 %>
+<% @disclaimer_text_limit = 500 %>
+<% @tabindex = 0 %>
+<div class="well">
+  <%= render 'admin/forms/logo_display', { form: form } %>
+</div>
+<br>
+<div class="form-title-edit">
+  <div class="text-uppercase font-body-3xs">
+    Form title
+  </div>
+  <input type="text" tabindex="<%= @tabindex += 1 %>" class="usa-input survey-title-input"
+    data-url="<%= admin_form_path(form) %>"
+    value="<%= form.title.present? ? form.title : 'Form title'  %>" />
+  <span class="usa-hint save-notice survey-title">
+    <i class="fa fa-check-circle" aria-hidden="true"></i> form title saved
+  </span>
+</div>
+<div class="fba-instructions">
+  <label class="usa-label text-uppercase font-body-3xs" for="instructions">
+    Instructions
+  </label>
+  <textarea id="instruction_text" class="usa-textarea instructions countable" name="instructions" tabindex="<%= @tabindex += 1 %>" data-url="<%= admin_form_path(form) %>"><%= form.instructions %></textarea>
+  <br/>
+  <span class="usa-hint save-notice survey-instructions">
+    <i class="fa fa-check-circle" aria-hidden="true"></i> saved
+  </span>
+  <span class="counter-msg usa-hint usa-character-count__message" aria-live="polite">
+    <%= @instruction_text_limit %> characters allowed
+  </span>
+  <br>
+  <span class="display-inline instructions-show">
+    <%= form.instructions.present? ? sanitize(form.instructions) : 'Preview instructions here' %>
+  </span>
+  &nbsp;
+</div>
+<br>
+<div class="sorting-div">
+  <% multi_section_question_number = 0 %>
+  <% form.form_sections.includes(:questions).each_with_index do |section, i| %>
+    <%= render 'admin/form_sections/view', { form: form, section: section, multi_section_question_number: multi_section_question_number, form_section_page: i + 1, tabindex: @tabindex } %>
+  <% end %>
+</div>
+<%= link_to new_admin_form_form_section_path(form), class: "usa-button form-add-section" do %>
+  <span class="fa fa-plus"></span>
+  Add Section
+<% end %>
+<br/>
+<br/>
+<hr style="border: none; border-top: 1px solid #E5E5E5;">
+<div class="grid-row">
+  <div class="grid-col-12">
+    <div class="touchpoints-form-disclaimer">
+      <label class="usa-label text-uppercase font-body-3xs" for="disclaimer-text">
+        Disclaimer text
+      </label>
+      <small id="fba-dialog-privacy">
+        <p class="fba-disclaimer-text">
+          <textarea id="disclaimer_text" class="usa-textarea countable" name="disclaimer-text" tabindex="<%= @tabindex += 1 %>"data-url="<%= admin_form_path(form) %>"><%= form.disclaimer_text %></textarea>
+          <span class="usa-hint save-notice survey-disclaimer">
+            <i class="fa fa-check-circle" aria-hidden="true"></i> saved
+          </span>
+          <span class="counter-msg usa-hint usa-character-count__message" aria-live="polite">
+            <%= @disclaimer_text_limit %> characters allowed
+          </span>
+          <div id="disclaimer_text-show" tabindex="<%= @tabindex += 1 %>"><%= form.disclaimer_text.present? ? sanitize(form.disclaimer_text) : 'Survey Disclaimer Text' %></div>
+        </p>
+      </small>
+    </div>
+  </div>
+</div>
+<br/>
+<hr style="border: none; border-top: 1px solid #E5E5E5;">
+<div id="success_text_div">
+  <%= render "admin/questions/success_text", {form: form} %>
+</div>
+<br>
+
+<script>
+$(function() {
+  $(".dropdown-content").hide();
+  $(".question-option-edit").hide();
+
+  <% if form_permissions?(form: form) %>
+    $('.survey-title-input').on("blur", function(event) {
+      event.preventDefault();
+      $('.usa-hint.save-notice.survey-title').show();
+      $('.usa-hint.save-notice.survey-title').fadeOut(2000);
+      $.ajax({
+        type: "PATCH",
+        url: $(this).attr("data-url") + "/update_title",
+        data: {title: $(this).val()}
+      });
+    });
+
+    $("#disclaimer_text").on("focus", function(event) {
+      event.preventDefault();
+      $(this).text($(this).attr("data-html-value"));
+    });
+
+    $(".fba-instructions .instructions").on("blur", function(event) {
+      event.preventDefault();
+      $.ajax({
+        type: "PATCH",
+        url:  $(this).attr("data-url") + "/update_instructions",
+        data: {
+          instructions: $(this).val()
+        }
+      }).done(function(data) {
+        $(".fba-instructions .instructions-show").html(data.data.attributes.instructions);
+        $('.usa-hint.save-notice.survey-instructions').show();
+        $('.usa-hint.save-notice.survey-instructions').fadeOut(2000);
+      });
+    });
+
+    $("#disclaimer_text").on("blur", function(event) {
+      event.preventDefault();
+      $.ajax({
+        type: "PATCH",
+        url: $(this).attr("data-url") + "/update_disclaimer_text",
+        data: {
+          disclaimer_text: $(this).val()
+        }
+      }).done(function(data) {
+        $("#disclaimer_text-show").html(data.data.attributes.disclaimer_text);
+        $('.usa-hint.save-notice.survey-disclaimer').show();
+        $('.usa-hint.save-notice.survey-disclaimer').fadeOut(2000);
+      });
+    });
+
+    $("#instruction_text.countable").on("focus", function(event) {
+      event.preventDefault();
+      textCounter(this, <%= @instruction_text_limit %>);
+    });
+    $("#instruction_text.countable").on("keyup", function(event) {
+      event.preventDefault();
+      textCounter(this, <%= @instruction_text_limit %>);
+    });
+
+    $("#disclaimer_text.countable").on("focus", function(event) {
+      event.preventDefault();
+      textCounter(this, <%= @disclaimer_text_limit %>);
+    });
+    $("#disclaimer_text.countable").on("keyup", function(event) {
+      event.preventDefault();
+      textCounter(this, <%= @disclaimer_text_limit %>);
+    });
+
+  $('.form-add-section').on("click", function(event) {
+    event.preventDefault();
+    $.ajax({
+      type: "GET",
+      url: $(this).attr("href"),
+      success: function (data) {
+        $(".sorting-div").append(data);
+      }
+    });
+  });
+
+  $(".question-options").on("click", ".question-option-view", function(event) {
+    $('.question-option-edit').hide();
+    $('.question-option-view').show();
+    $(this).hide();
+    var titleEdit = $(this).parent().find(".question-option-edit");
+    titleEdit.show();
+    titleEdit.find("input").focus();
+  });
+
+  $(".question-option-edit input").on("keyup", function(event) {
+    if (event.keyCode == 13) {
+      $(this).closest('div.question-option').find('.question-option-view').html($(this).val());
+
+      $.ajax({
+        type: "PATCH",
+        url: $(this).attr("data-href") + "/update_title",
+        data: { text: $(this).val() }
+      }).done(function() {
+        $('.question-option-edit').hide();
+        $('.question-option-view').show();
+      });
+    }
+  });
+
+  $(".form-builder").on("click", ".form-delete-question-option", function(event) {
+    event.preventDefault();
+    if (confirm('Are you sure?')) {
+      $(this).closest('div.question-option').remove();
+      $.ajax({
+        type: "DELETE",
+        url: $(this).attr("href")
+      });
+    }
+  });
+
+  $('.form-builder').on("click", '.form-add-question', function(event) {
+    event.preventDefault();
+    var formSection = $(this).parents(".form-section-div")[0];
+    var formSectionId = $(formSection).attr("data-id");
+    $.ajax({
+      type: "GET",
+      url: $(this).attr("href"),
+      data: { "form_section_id": formSectionId },
+      success: function (data) {
+        $("#form_section_" + formSectionId).find(".questions").append(data);
+      }
+    });
+  });
+
+  $('.form-builder').on("click", '.form-edit-question', function(event) {
+    event.preventDefault();
+
+    var questionId = "#question_" + $(this).data("id");
+    $.ajax({
+      type: "GET",
+      url: $(this).attr("href"),
+      success: function (data) {
+        $(questionId).html(data);
+      }
+    });
+  });
+
+  $('.question-options').on("click", '.form-save-question-option', function(event) {
+    event.preventDefault();
+    var option_text = $($(this).parent().find("input")[0]).val();
+    var option_value = $($(this).parent().find("input")[1]).val();
+    $(".question-option-edit").hide();
+    $(".question-option-view").show();
+    $.ajax({
+      type: "PATCH",
+      url: $(this).attr("href"),
+      data: { question_option: { text: option_text, value: option_value } }
+    });
+  });
+
+  $(".questions").sortable({
+    items: '.question',
+    connectWith: ".questions",
+    distance: 20,
+    update: function(e, ui) {
+      var section_id = $(this).closest(".form-section-div").attr('data-id');
+      var data = $(this).sortable('serialize');
+      data = data + "&form_section_id=" + section_id;
+      $.ajax({
+        url: '<%= sort_questions_admin_form_questions_path(@form) %>',
+        type: "PATCH",
+        data: data
+      });
+    }
+  });
+
+  $(".question-options").sortable({
+    items: '.question-option',
+    update: function(e, ui) {
+      $.ajax({
+        url: $(this).parent().data("url"),
+        type: "PATCH",
+        data: $(this).sortable('serialize')
+      });
+    }
+  });
+
+  $(".sorting-div").sortable({
+    distance: 20,
+    update: function(e, ui) {
+      var url = ui.item.data("url");
+      $.ajax({
+        url: url,
+        type: "PATCH",
+        data: $(this).sortable('serialize')
+      });
+    }
+  });
+
+  $(".form-builder").on("mouseover", ".question-menu-action", function(event) {
+    $(".dropdown-content").hide();
+    $(event.target).parent().find(".dropdown-content").show();
+  });
+
+  $(".form-builder").on("click", ".question-menu-action", function(event) {
+    $(event.target).parent().find(".dropdown-content").toggle();
+  });
+
+  $('.form-builder').on("click", '.form-add-question-option', function(event) {
+    event.preventDefault();
+
+    $(this).closest('div.new-question-options-div').find('.form-add-question-option').hide();
+    var editDiv =  $(this).closest('div.new-question-options-div').find('.question-option-form');
+    $.ajax({
+      type: "GET",
+      url: $(this).attr("href"),
+      success: function (data) {
+        editDiv.html(data);
+        $(editDiv).show();
+        editDiv.find("#question_option_text").focus();
+      }
+    });
+  });
+
+  $('.form-builder').on("click", '.form-add-other-question-option', function(event) {
+    event.preventDefault();
+    $(this).closest('div.new-question-options-div').find('.form-add-other-question-option').hide();
+  });
+
+  $('.question').on("click", ".edit.button", function(event) {
+    event.preventDefault();
+    var contentDiv =  $(this).closest('.question-option');
+    $.ajax({
+      type: "GET",
+      url: $(this).attr("href"),
+      success: function (data) {
+        contentDiv.html(data);
+        contentDiv.find("#question_option_text").focus();
+      }
+    });
+  });
+
+  $('.form-edit-question-dropdown-option').on("click", function(event) {
+    event.preventDefault();
+    var contentDiv =  $(this).closest('div.usa-radio');
+    $.ajax({
+      type: "GET",
+      url: $(this).attr("href"),
+      success: function (data) {
+        contentDiv.html(data);
+        contentDiv.find("#question_option_text").focus();
+      }
+    });
+  });
+
+  // Set Question Option value to what the Question Option name is initially
+  $(".question").on('focusout', "textarea.usa-input[name='question_option[text]']", function() {
+    var enteredText = $(this).val();
+    numberOfLineBreaks = (enteredText.match(/\n/g)||[]).length;
+    var questionDiv = $($(this).parents(".question")[0]);
+    var valueField = questionDiv.find("input.usa-input[type='text'][name='question_option[value]']");
+    var valueLabel = valueField.parent().find(".usa-label");
+    if (numberOfLineBreaks > 0) {
+      valueField.hide();
+      valueLabel.hide();
+    } else {
+      valueField.show();
+      valueLabel.show();
+    }
+    if (valueField.val() === '') {
+      valueField.val(enteredText);
+    }
+  });
+<% end %>
+});
+function textCounter(field,maxlimit) {
+   var countfield = field.parentNode.querySelector(".counter-msg");
+   if ( field.value.length > maxlimit ) {
+    field.value = field.value.substring( 0, maxlimit );
+    countfield.innerText = '0 characters left';
+    return false;
+   } else {
+    countfield.innerText = "" + (maxlimit - field.value.length) + " characters left";
+   }
+}
+</script>

@@ -1,0 +1,134 @@
+<%= form_with(model: digital_service_account, url: (digital_service_account.persisted? ? admin_digital_service_account_path(digital_service_account) : admin_digital_service_accounts_path), data: { turbo: false }) do |form| %>
+  <% if digital_service_account.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(digital_service_account.errors.count, "error") %> prohibited this digital_service_account from being saved:</h2>
+
+      <ul>
+        <% digital_service_account.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name, "Account name", class: "usa-label" %>
+    <%= form.text_field :name, class: "usa-input", required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :account, "Account platform", class: "usa-label" %>
+    <%= form.select :account, options_for_select(DigitalServiceAccount.list, form.object.account), { prompt: "Select" }, class: "usa-select", required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :service_url, "Account URL", class: "usa-label" %>
+    <%= form.text_field :service_url, class: "usa-input", required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :short_description, class: "usa-label" %>
+    <div class="usa-hint font-sans-2xs">
+      200 character limit
+    </div>
+    <%= form.text_field :short_description, class: "usa-input", maxlength: "200" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :long_description, class: "usa-label" %>
+    <%= form.text_area :long_description, class: "usa-textarea" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :language, class: "usa-label" %>
+    <select class="usa-input" name="outlet[language]" id="outlet_language">
+      <option value="">Select</option>
+      <option selected="selected" value="English">English</option>
+      <option value="Afrikaans">Afrikaans</option>
+      <option value="Amharic">Amharic</option>
+      <option value="Arabic">Arabic</option>
+      <option value="Azerbaijani">Azerbaijani</option>
+      <option value="Bangla">Bangla</option>
+      <option value="Basque">Basque</option>
+      <option value="Bengali">Bengali</option>
+      <option value="Bulgarian">Bulgarian</option>
+      <option value="Catalan">Catalan</option>
+      <option value="Chinese(Simplified)">Chinese  (Simplified)</option>
+      <option value="Chinese(Traditional)">Chinese  (Traditional)</option>
+      <option value="Croatian">Croatian</option>
+      <option value="Czech">Czech</option>
+      <option value="Danish">Danish</option>
+      <option value="Dutch">Dutch</option>
+      <option value="English(UK)">English (UK)</option>
+      <option value="Estonian">Estonian</option>
+      <option value="Filipino">Filipino</option>
+      <option value="Finnish">Finnish</option>
+      <option value="French">French</option>
+      <option value="French(Canada)">French (Canada)</option>
+      <option value="Galician">Galician</option>
+      <option value="German">German</option>
+      <option value="Greek">Greek</option>
+      <option value="Gujarati">Gujarati</option>
+      <option value="Hebrew">Hebrew</option>
+      <option value="Hindi">Hindi</option>
+      <option value="Hungarian">Hungarian</option>
+      <option value="Icelandic">Icelandic</option>
+      <option value="Indonesian">Indonesian</option>
+      <option value="Italian">Italian</option>
+      <option value="Japanese">Japanese</option>
+      <option value="Kannada">Kannada</option>
+      <option value="Korean">Korean</option>
+      <option value="Latvian">Latvian</option>
+      <option value="Lithuanian">Lithuanian</option>
+      <option value="Malay">Malay</option>
+      <option value="Malayalam">Malayalam</option>
+      <option value="Marathi">Marathi</option>
+      <option value="Norwegian">Norwegian</option>
+      <option value="Persian">Persian</option>
+      <option value="Polish">Polish</option>
+      <option value="Portuguese(Brazil)">Portuguese  (Brazil)</option>
+      <option value="Portuguese(Portugal)">Portuguese  (Portugal)</option>
+      <option value="Punjabi">Punjabi</option>
+      <option value="Romanian">Romanian</option>
+      <option value="Russian">Russian</option>
+      <option value="Serbian">Serbian</option>
+      <option value="Slovak">Slovak</option>
+      <option value="Slovenian">Slovenian</option>
+      <option value="Spanish">Spanish</option>
+      <option value="Swahili">Swahili</option>
+      <option value="Swedish">Swedish</option>
+      <option value="Tamil">Tamil</option>
+      <option value="Telugu">Telugu</option>
+      <option value="Thai">Thai</option>
+      <option value="Turkish">Turkish</option>
+      <option value="Ukrainian">Ukrainian</option>
+      <option value="Urdu">Urdu</option>
+      <option value="Vietnamese">Vietnamese</option>
+      <option value="Zulu">Zulu</option>
+    </select>
+
+  </div>
+
+  <div class="field">
+    <%= form.label :notes, class: "usa-label" %>
+    <%= form.text_area :notes, class: "usa-textarea" %>
+  </div>
+
+  <% if !digital_service_account.persisted? %>
+    <br>
+    <div class="usa-alert usa-alert--info">
+      <div class="usa-alert__body">
+        <p class="usa-alert__text">
+          Agencies, Contacts, and Tags can be added to this record, after creation.
+        </p>
+      </div>
+    </div>
+  <% end %>
+
+  <p>
+    <%= form.submit (digital_service_account.persisted? ? "Update social media account" : "Create social media account"), class: "usa-button" %>
+    <% if digital_service_account.persisted? %>
+      <%= link_to "Cancel", admin_digital_service_account_path(digital_service_account), class: "usa-button usa-button--base" %>
+    <% end %>
+  </p>
+<% end %>

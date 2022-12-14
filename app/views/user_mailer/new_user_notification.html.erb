@@ -1,0 +1,8 @@
+<%= render 'user_mailer/components/header' %>
+<h3>New user account created</h3>
+<p>
+  <%= @user.email %> was created on <%= Date.today %>.
+</p>
+<p>
+  Login to Touchpoints at <%= link_to ENV.fetch("INDEX_URL"), ENV.fetch("INDEX_URL") %>
+</p>

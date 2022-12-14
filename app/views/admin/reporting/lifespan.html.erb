@@ -1,0 +1,62 @@
+<% content_for :navigation_title do %>
+  Survey Lifespan by Agency
+<% end %>
+
+<p>
+  <%= link_to admin_dashboard_path do %>
+    <i class="fa fa-arrow-circle-left"></i>
+    Back to Admin Dashboard
+  <% end %>
+</p>
+
+<div class="agency-survey-lifespan-rerport">
+  <% @org_summary.each do | org | %>
+  <div class="well">
+    <h3>
+      <%= org[:name] %>
+    </h3>
+
+    <% if org[:forms].size > 0 %>
+      <table class="usa-table">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Submissions</th>
+          <th>Lifespan (Days)</th>
+        </tr>
+        </thead>
+        <tbody>
+          <% org[:forms].each do |form| %>
+        <tr>
+          <td>
+            <%= link_to form[:name], admin_form_path(form[:short_uuid]) %>
+          </td>
+          <td>
+            <%= form[:counts].num_submissions %>
+          </td>
+          <td>
+            <%= number_with_precision(form[:counts].lifespan / (3600 * 24), precision: 2) %>
+          </td>
+        </tr>
+        <% end %>
+          <tfoot>
+            <tr>
+              <td>
+                Total Submissions
+              </td>
+              <td>
+                <%= org[:submissions] %>
+              </td>
+              <td>
+                average:
+                <%= number_with_precision(org[:avg_lifespan] / (3600 * 24), precision: 2) %>
+                days
+              </td>
+            </tr>
+          </tfoot>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+  <% end %>
+</div>

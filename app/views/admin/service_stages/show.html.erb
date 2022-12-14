@@ -1,0 +1,60 @@
+<% content_for :navigation_title do %>
+  Service Stage for: <%= @service.name %>
+  <%= link_to edit_admin_service_service_stage_path(@service, @service_stage), class: "usa-button usa-button-inverted float-right" do %>
+    <i class="fa fa-pencil-alt"></i>
+    Edit
+  <% end %>
+<% end %>
+<p>
+  <%= link_to admin_service_service_stages_path(@service) do %>
+    <i class="fa fa-arrow-circle-left"></i>
+    Back to Service stages
+  <% end %>
+</p>
+
+<%= render 'admin/services/nav', service: @service %>
+
+<br>
+
+<p>
+  <strong>Service:</strong>
+  <%= link_to @service_stage.service.name, admin_service_path(@service_stage.service) %>
+</p>
+<p>
+  <strong>Organization:</strong>
+  <%= link_to @service_stage.service.organization.name, admin_organization_path(@service_stage.service.organization) %>
+</p>
+<p>
+  <strong>Name:</strong>
+  <%= @service_stage.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= to_markdown(@service_stage.description) %>
+</p>
+
+<p hidden>
+  <strong>Notes:</strong>
+  <%= @service_stage.notes %>
+</p>
+
+<p hidden>
+  <strong>Time:</strong>
+  <%= @service_stage.time %> minutes
+</p>
+
+<p>
+  <strong>Position (sort order):</strong>
+  <%= @service_stage.position %>
+</p>
+
+<p>
+  <strong>Customer type:</strong>
+  <%= @service_stage.try(:persona).try(:name) %>
+</p>
+
+<p hidden>
+  <strong>Total eligible population:</strong>
+  <%= number_with_delimiter @service_stage.total_eligible_population %>
+</p>

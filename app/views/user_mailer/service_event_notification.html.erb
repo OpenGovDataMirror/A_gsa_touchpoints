@@ -1,0 +1,18 @@
+<%= render 'user_mailer/components/header' %>
+<h3>
+  Event Notification
+  <br>
+  <%= @subject %>
+</h3>
+<p>
+  The Service
+  <%= @service.name %>,
+  managed by <%= @service.service_owner.email %>
+  at <%= @service.organization.name %>
+  was <%= @event %>.
+</p>
+<% if @link.present? %>
+<p>
+  <%= link_to @link, @link %>
+</p>
+<% end %>

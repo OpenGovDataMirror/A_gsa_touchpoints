@@ -1,0 +1,50 @@
+<% content_for :navigation_title do %>
+  Review Social Media Accounts
+  <%= link_to new_admin_digital_service_account_path, class: "usa-button usa-button-inverted float-right" do %>
+    <i class="fa fa-plus-circle"></i>
+    New Account
+  <% end %>
+<% end %>
+
+<p>
+  <%= link_to admin_registry_path do %>
+    <i class="fa fa-arrow-circle-left"></i>
+    Back to the Digital Registry
+  <% end %>
+</p>
+
+<div class="usa-alert usa-alert--info">
+  <div class="usa-alert__body">
+    <p class="usa-alert__text">
+      Displaying Social Media Accounts where the status = 'created', 'updated', or 'submitted' (not 'published' or 'archived')
+    </p>
+  </div>
+</div>
+
+<table class="usa-table width-full">
+  <thead>
+    <tr>
+      <th data-sortable scope="col">Platform</th>
+      <th data-sortable scope="col">Account name</th>
+      <th data-sortable scope="col">Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @digital_service_accounts.each do |digital_service_account| %>
+    <tr>
+      <td>
+        <% if digital_service_account.account? %>
+        <%= link_to digital_service_account.account, admin_digital_service_account_path(digital_service_account) %>
+        <% else %>
+        <%= link_to "** unnamed account **", admin_digital_service_account_path(digital_service_account) %>
+        <% end %>
+      </td>
+      <td><%= digital_service_account.name %></td>
+      <td><%= digital_service_account.aasm_state %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @digital_service_accounts %>

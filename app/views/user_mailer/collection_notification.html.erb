@@ -1,0 +1,15 @@
+<%= render 'user_mailer/components/header' %>
+<h3>
+  Data Collection Notification
+</h3>
+<p>
+  Updates to the Data Collection,
+  <%= @collection.name %>
+  have occurred.
+</p>
+<p>
+  Visit
+  <a href="<%= admin_collection_url(@collection) %>">
+    <%= admin_collection_url(@collection) %>
+  </a> to view.
+</p>

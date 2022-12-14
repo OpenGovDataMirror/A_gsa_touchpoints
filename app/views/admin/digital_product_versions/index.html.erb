@@ -1,0 +1,52 @@
+<turbo-frame id="digital_product_versions_container">
+  <h3>
+    Digital Product Versions
+  </h3>
+  <div class="usa-alert margin-bottom-2">
+    <div class="usa-alert__body">
+      <p class="usa-alert__text font-sans-2xs">
+        A Digital Product may have one or more versions (1.0, 1.1, 2.0, etc.)
+        and be available on one or more platforms.
+      </p>
+    </div>
+  </div>
+
+  <% if digital_product_permissions?(digital_product: @digital_product, user: current_user) %>
+  <%= link_to "New digital product version", new_admin_digital_product_digital_product_version_path(@digital_product), class: "usa-button" %>
+  <% end %>
+
+  <table class="usa-table width-full">
+    <thead>
+      <tr>
+        <th>Platform</th>
+        <th>Version</th>
+        <% if digital_product_permissions?(digital_product: @digital_product, user: current_user) %>
+        <th>Actions</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+    <% @digital_product_versions.each do | version | %>
+      <tr id="<%= version.id %>">
+        <td><%= version.platform %></td>
+        <td><%= version.version_number %></td>
+        <% if digital_product_permissions?(digital_product: @digital_product, user: current_user) %>
+        <td>
+          <%= link_to edit_admin_digital_product_digital_product_version_path(@digital_product, version),
+            class: "icon-link" do %>
+            <i class="fa fa-pencil-alt" title="Update digital product version"></i>
+          <% end %>
+
+          <%= link_to admin_digital_product_digital_product_version_path(@digital_product, version),
+            method: :delete,
+            class: "icon-link",
+            data: { turbo_frame: "digital_product_versions_container", confirm: 'Are you sure?' }  do %>
+            <i class="fas fa-trash-alt" title="Delete digital product version"></i>
+          <% end %>
+        </td>
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</turbo-frame>

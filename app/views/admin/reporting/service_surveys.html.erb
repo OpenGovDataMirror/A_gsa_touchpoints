@@ -1,0 +1,37 @@
+<% content_for :navigation_title do %>
+Forms by Service
+<% end %>
+
+<p>
+  <%= link_to admin_dashboard_path do %>
+    <i class="fa fa-arrow-circle-left"></i>
+    Back to Admin Dashboard
+  <% end %>
+</p>
+
+<div class="agency-service-survey-report">
+  <table class="usa-table">
+    <thead>
+      <tr>
+        <th>Agency</th>
+        <th>Service</th>
+        <th>Forms</th>
+      </tr>
+    </thead>
+    <% @services.each do | service | %>
+    <tr>
+      <td><%= service.organization.name %></td>
+      <td><%= service.name %></td>
+      <td>
+        <ul class="usa-list">
+          <% service.forms.each do |f| %>
+          <li>
+            <%= f.name %>
+          </li>
+          <% end %>
+        </ul>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

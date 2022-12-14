@@ -1,0 +1,128 @@
+<% content_for :navigation_title do %>
+  Performance management
+  <div class="float-right">
+    <%= link_to admin_goals_path, class: "usa-button usa-button-inverted" do %>
+      Goals, objectives, targets
+    <% end %>
+    <%= link_to admin_milestones_path, class: "usa-button usa-button-inverted" do %>
+      Milestones
+    <% end %>
+  </div>
+<% end %>
+
+<br>
+
+<div class="grid-row">
+  <div class="grid-col-12">
+    <div
+      class="usa-summary-box"
+      role="region"
+      aria-labelledby="summary-box-key-information">
+      <div class="usa-summary-box__body">
+        <div class="usa-summary-box__text">
+          <div class="grid-row">
+          <div class="grid-col-6">
+            <p>
+              Touchpoints currently supports 4 Data Collections.
+            </p>
+            <ul>
+              <li>
+                Quarterly CX Data Collections
+              </li>
+              <li>
+                Bi-annual Cyber-security supply chain
+              </li>
+              <li>
+                Annual Performance Goals
+              </li>
+              <li>
+                Annual GSA Website Inventory
+              </li>
+            </ul>
+          </div>
+          <div class="grid-col-6">
+            <p>
+              The data is used for:
+            </p>
+            <ul>
+              <li>
+                <a href="https://www.performance.gov/cx/" target="_blank">Performance.gov/cx</a>
+              </li>
+              <li>
+                <a href="https://www.performance.gov/agencies/" target="_blank">Performance.gov/agencies</a>
+              </li>
+              <li>
+                Annual reporting and 21st Century IDEA compliance
+              </li>
+            </ul>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<% if admin_permissions? %>
+<div class="grid-row margin-top-2 well">
+  <div class="grid-col-6">
+    <span class="usa-tag">
+      for Admins
+    </span>
+    <p>
+      <%= link_to "Send quarterly email to all Users for Draft Collections", admin_quarterly_performance_notification_path(year: 2023, quarter: 1), method: :post, class:
+      "usa-button usa-button--outline" %>
+    </p>
+  </div>
+</div>
+<% end %>
+
+<section class="usa-section">
+  <div class="grid-row grid-gap-md">
+    <div class="tablet:grid-col-12">
+
+      <div class="grid-row grid-gap-md">
+        <div class="grid-col-4">
+          <h3>
+            Quarterly - every 3 months
+          </h3>
+          <p>
+            <%= link_to admin_collections_path(year: 2022, quarter: 4), class: "usa-button usa-button--outline width-full" do
+              %>
+              CX Data Collection
+              <% end %>
+          </p>
+        </div>
+        <div class="grid-col-4">
+          <h3>
+            Bi-annually - every 6 months
+          </h3>
+          <p>
+            <%= link_to admin_cscrm_data_collections_path, class: "usa-button usa-button--outline width-full" do %>
+              Cybersecurity Supply-chain (C-SCRM)
+              <% end %>
+          </p>
+        </div>
+        <div class="grid-col-4">
+          <h3>
+            Annually - every 12 months
+          </h3>
+          <p>
+            <%= link_to admin_apgs_path, class: "usa-button usa-button--outline width-full" do %>
+              Performance Goal Reporting (APG)
+              <% end %>
+          </p>
+        </div>
+        <div class="grid-col-4" hidden>
+          <h3>
+            Ad-hoc
+          </h3>
+          <p>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>

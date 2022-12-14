@@ -1,0 +1,285 @@
+<% content_for :navigation_title do %>
+  U.S. Digital Registry
+<% end %>
+<br>
+<div class="grid-row grid-gap-lg">
+  <div class="desktop:grid-col-4">
+    <h3>
+      Websites
+    </h3>
+    <p>
+      <%= link_to admin_websites_path, class: "usa-button full-width" do %>
+        <span class="fa fa-eye"></span>
+        &nbsp;
+        View Websites
+      <% end %>
+    </p>
+    <p>
+      <%= link_to new_admin_website_path, class: "usa-button full-width" do %>
+        <span class="fa fa-plus"></span>
+        &nbsp;
+        Add a Website
+      <% end %>
+    </p>
+    <p>
+      <%= link_to review_admin_websites_path, class: "usa-button full-width" do %>
+        <span class="fa fa-list"></span>
+        &nbsp;
+        Review Websites
+      <% end %>
+    </p>
+  </div>
+  <div class="desktop:grid-col-4">
+    <h3>
+      Mobile Products
+    </h3>
+    <p>
+      <%= link_to admin_digital_products_path, class: "usa-button full-width" do %>
+        <span class="fa fa-eye"></span>
+        &nbsp;
+        View Mobile Products
+      <% end %>
+    </p>
+    <p>
+      <%= link_to new_admin_digital_product_path, class: "usa-button full-width" do %>
+        <span class="fa fa-plus"></span>
+        &nbsp;
+        Add a Mobile Product
+      <% end %>
+    </p>
+    <p>
+      <%= link_to review_admin_digital_products_path, class: "usa-button full-width"  do %>
+        <span class="fa fa-list"></span>
+        &nbsp;
+        Review Mobile Products
+      <% end %>
+    </p>
+  </div>
+  <div class="desktop:grid-col-4">
+    <h3>
+      Social Media Accounts
+    </h3>
+    <p>
+      <%= link_to admin_digital_service_accounts_path, class: "usa-button full-width" do %>
+        <span class="fa fa-eye"></span>
+        &nbsp;
+        View Social Media Accounts
+      <% end %>
+    </p>
+    <p>
+      <%= link_to new_admin_digital_service_account_path, class: "usa-button full-width" do %>
+        <span class="fa fa-plus"></span>
+        &nbsp;
+        Add a Social Media Account
+      <% end %>
+    </p>
+    <p>
+      <%= link_to review_admin_digital_service_accounts_path, class: "usa-button full-width" do %>
+        <span class="fa fa-list"></span>
+        &nbsp;
+        Review Social Media Accounts
+      <% end %>
+    </p>
+  </div>
+</div>
+
+<div class="grid-row grid-gap-lg" style="display:none;">
+  <div class="grid-col-4">
+    <h3>
+      Website Activity
+    </h3>
+    <table class="usa-table">
+      <tr>
+        <td>
+          Activity
+        </td>
+        <td>
+          Volume
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Created last 30 days
+        </td>
+        <td>
+          <%= Website.where("created_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Created last 90 days
+        </td>
+        <td>
+          <%= Website.where("created_at >= ?", Time.now - 90.days).size %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Created last 180 days
+        </td>
+        <td>
+          <%= Website.where("created_at >= ?", Time.now - 180.days).size %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Updated last 30 days
+        </td>
+        <td>
+          <%= Website.where("updated_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Updated last 90 days
+        </td>
+        <td>
+          <%= Website.where("updated_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Updated last 180 days
+        </td>
+        <td>
+          <%= Website.where("updated_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="grid-col-4">
+    <h3>
+      Mobile Products Activity
+    </h3>
+    <table class="usa-table">
+      <tr>
+        <td>
+          Activity
+        </td>
+        <td>
+          Volume
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Created last 30 days
+        </td>
+        <td>
+          <%= DigitalProduct.where("created_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Created last 90 days
+        </td>
+        <td>
+          <%= DigitalProduct.where("created_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Created last 180 days
+        </td>
+        <td>
+          <%= DigitalProduct.where("created_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Updated last 30 days
+        </td>
+        <td>
+          <%= DigitalProduct.where("updated_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Updated last 90 days
+        </td>
+        <td>
+          <%= DigitalProduct.where("updated_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Updated last 180 days
+        </td>
+        <td>
+          <%= DigitalProduct.where("updated_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="grid-col-4">
+    <h3>
+      Social Media Activity
+    </h3>
+    <table class="usa-table">
+      <tr>
+        <td>
+          Activity
+        </td>
+        <td>
+          Volume
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Created last 30 days
+        </td>
+        <td>
+          <%= DigitalServiceAccount.where("created_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Created last 90 days
+        </td>
+        <td>
+          <%= DigitalServiceAccount.where("created_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Created last 180 days
+        </td>
+        <td>
+          <%= DigitalServiceAccount.where("created_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Updated last 30 days
+        </td>
+        <td>
+          <%= DigitalServiceAccount.where("updated_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Updated last 90 days
+        </td>
+        <td>
+          <%= DigitalServiceAccount.where("updated_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Updated last 180 days
+        </td>
+        <td>
+          <%= DigitalServiceAccount.where("updated_at >= ?", Time.now - 30.days).size %>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<% if admin_permissions? %>
+  <p>
+    How many Registry searches have users performed?
+  </p>
+  <p>
+    <span class="usa-tag"><%= RegistrySearch.count %></span>
+  </p>
+<% end %>

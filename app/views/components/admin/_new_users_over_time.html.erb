@@ -1,0 +1,63 @@
+<div id="daily-new-users">
+  <h3>
+    New Users per day
+  </h3>
+  <p>Total user accounts created over period: <%= user_groups.sum { | n | n[1] } %> </p>
+  <div style="width:100%;">
+    <canvas id="userChart"></canvas>
+  </div>
+</div>
+
+<script>
+$(function() {
+  var ctx = document.getElementById('userChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: [
+      <% user_groups.each do |key, value| %>
+        '<%= key.strftime("%m-%d") %>',
+      <% end %>
+      ],
+      datasets: [{
+        label: '# of Active Users',
+        data: [
+        <% user_groups.each do |key, value| %>
+          <%= value %>,
+        <% end %>
+        ],
+        backgroundColor: "#57B63A"
+      },
+      {
+        label: '# of Inactive Users',
+        data: [
+        <% inactive_user_groups.each do |key, value| %>
+          <%= value %>,
+        <% end %>
+        ],
+        backgroundColor: "#AEBCA9"
+      }
+      ]
+    },
+    options: {
+      responsive: true,
+      legend: {
+        position: 'bottom',
+      },
+      scales: {
+      x: {
+        stacked: true,
+      },
+      y: {
+        stacked: true
+      },
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+      }
+    }
+  });
+})
+</script>

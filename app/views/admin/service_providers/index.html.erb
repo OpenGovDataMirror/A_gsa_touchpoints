@@ -1,0 +1,99 @@
+<% content_for :navigation_title do %>
+  <%= @service_providers.size %>
+  Service Providers
+  <% if service_manager_permissions? %>
+    <%= link_to new_admin_service_provider_path, class: "usa-button usa-button-inverted float-right" do %>
+      <i class="fa fa-plus-circle"></i>
+      New Service Provider
+    <% end %>
+  <% end %>
+<% end %>
+
+<br>
+<div
+  class="usa-summary-box"
+  role="region"
+  aria-labelledby="summary-box-key-information"
+>
+  <div class="usa-summary-box__body">
+    <div class="usa-summary-box__text">
+      <p>
+        A Service Provider is a federal entity that provides customer-facing services.
+        In
+        <a href="https://www.performance.gov/cx/assets/files/a11_2020_sec280.pdf" target="_blank" rel="noopener">Section 280 of OMB Circular A-11</a>,
+        certain service providers are classified by OMB as "High Impact Service Providers", or
+        HISPs.
+      </p>
+      <p>
+        The Service Provider data here
+        is
+        <span class="data-classification">
+          public
+        </span>
+         and
+        published
+        <span class="publishing-frequency">
+          quarterly
+        </span>
+        at
+        <a href="https://www.performance.gov/cx/#hisps" target="_blank" rel="noopener">performance.gov/cx</a>.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="well">
+  <div class="field">
+    <%= label_tag :search_text, "Search by organization or name" %>
+    <%= text_field_tag :search_text, nil, class: "usa-input" %>
+    <% if @tags.first %>
+      <p>
+        Search by tag
+      </p>
+      <div class="tag-list">
+        <% @tags.order(:name).each do | tag | %>
+          <a href="#" class="search-tag-link" data-name="<%= tag.name %>">
+            <span class="usa-tag">
+              <%= tag.name %> (<%= tag.taggings_count %>)
+            </span>
+          </a>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="search-results">
+  <%= render 'results' %>
+</div>
+
+<p>
+  <%= link_to admin_hisps_path(format: :csv), class: "usa-button usa-button--outline" do %>
+    <i class="fa fa-download"></i>
+    Download as hisps.csv
+  <% end %> - used on <a href="https://performance.gov/cx/" target="_blank" rel="noopener">performance.gov/cx</a>
+</p>
+
+<script>
+  $(function() {
+    $("#search_text").on("keyup", debounce(function() {
+      var searchValue = $("#search_text").val();
+      $.ajax({
+        url: '/admin/service_providers/search',
+        data: {
+          search: searchValue
+        }
+      });
+    }, 400));
+
+    $(".search-tag-link").on("click", function() {
+      $("#search_text").val("");
+
+      $.ajax({
+        url: '/admin/service_providers/search',
+        data: {
+          tag: $(this).attr("data-name")
+        }
+      });
+    });
+  });
+</script>

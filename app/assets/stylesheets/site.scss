@@ -1,0 +1,582 @@
+.code {
+  font-family: monospace;
+  border-radius: 3px;
+  overflow-wrap: break-word;
+}
+footer {
+  margin-top: 16px;
+  font-size: 13px;
+  padding: 32px 0;
+  color: #333;
+}
+.footer-links {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+  padding-left: 0;
+}
+.footer-info {
+  text-align: right;
+}
+.footer-info,
+.footer-links,
+.usa-unstyled-list {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+  padding-left: 0;
+}
+.footer-info li,
+.footer-links li,
+.footer-text {
+  line-height: 1.25rem;
+}
+
+// For the extra-wide Responses table
+.table-scroll {
+	position:relative;
+	max-width: 100%;
+	margin: auto;
+}
+.table-wrap {
+	width:100%;
+	overflow:auto;
+}
+.table-scroll table {
+	width:100%;
+}
+.table-scroll th,
+.table-scroll td {
+  max-width: 600px;
+}
+
+.dark-blue-bg {
+  background-color: #162D50;
+  color: white;
+}
+
+.light-blue-bg {
+  background-color: #e1f3f8;
+}
+
+.hr {
+  border: none;
+  border-bottom: 1px solid #d6d7d9;
+  margin: 0;
+}
+
+.header-logo {
+  max-height: 32px;
+}
+
+.remove-tag-link {
+  margin-left: 5px;
+  color: #999;
+
+}
+.search-tag-link {
+  text-decoration: none;
+  color: #1b1b1b;
+  margin-right: 3px;
+}
+
+.delivery-options-preview {
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 20px;
+  margin: 20px;
+}
+
+// USWDS Overrides
+@media (min-width: 64em) {
+  .usa-header nav {
+    background-color: #162E51;
+
+    .usa-nav__primary {
+      font-family: Merriweather Web, Georgia, Cambria, Times New Roman, Times, serif;
+    }
+
+    .usa-nav__primary >
+    .usa-nav__primary-item >
+    a {
+      color: white;
+      font-weight: normal;
+    }
+
+    .usa-nav__primary button {
+      color: white;
+    }
+
+    .usa-nav__primary button[aria-expanded=false]{
+      background-image:asset_url("angle-arrow-down-white.svg"), -webkit-gradient(linear, left top, left bottom, from(transparent), to(transparent));
+      background-image:asset_url("angle-arrow-down-white.svg"), linear-gradient(transparent, transparent);
+    }
+  }
+
+  // Underline white nav links
+  .usa-header--extended .usa-current::after,
+  .usa-header--extended [aria-expanded=true]::after,
+  .usa-header--extended .usa-nav__link:hover::after {
+    background-color: white;
+    height: 3px;
+    margin-bottom: 7px;
+  }
+
+  .usa-header--extended .usa-logo {
+    font-size: initial;
+    margin: 1rem 0;
+  }
+
+  .usa-logo {
+    margin-top: 1rem;
+  }
+}
+
+.usa-alert {
+   margin-top: 0;
+}
+
+.submit-button {
+  padding: 1em 0;
+}
+
+.touchpoints-form-wrapper div[role='group'] {
+  margin: 7px 0;
+}
+
+.touchpoints-form-body > fieldset:nth-child(odd) {
+  background: #F9F9F9;
+}
+
+.well {
+  border: 1px solid #d6d7d9;
+  padding: 20px;
+  margin: 10px 0;
+  overflow-wrap: break-word;
+}
+
+.pad {
+  padding: 10px 20px;
+  margin: 10px 0;
+}
+
+// Override USDWS h1, h2, h3
+h1, h2, h3 {
+  margin: 0.5em 0;
+}
+
+.justify-vertical {
+  display: flex;
+  align-items: center;
+}
+.form-header-logo {
+  max-height: 60px;
+  margin-right: 10px;
+}
+.form-header-logo-square {
+  max-height: 80px;
+  margin-right: 10px;
+}
+.hide {
+  display: none;
+}
+.highlight {
+  background: #ebf3fa;
+}
+.white-bg {
+  background: #FFFFFF;
+}
+
+// Maintenance Page Styles
+.maintenance footer {
+  align-items: center;
+  border-top: 1px solid #E5E5E5;
+  bottom: 0;
+  left: 0;
+  padding-left: 10%;
+  position: fixed;
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+}
+
+@media all and (min-width: 40em) {
+  .maintenance .usa-prose h1 {
+    margin-top: 75px;
+    font-size: 50px;
+  }
+  .maintenance footer {
+    font-size: 22px;
+  }
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family:Merriweather Web, Georgia, Cambria, Times New Roman, Times, serif;
+}
+
+.no-outline {
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  text-decoration: underline;
+}
+
+pre {
+  word-wrap: break-word;
+}
+
+.usa-table
+tbody tr:hover,
+tbody tr:hover,
+tbody tr:hover td {
+  background-color: #E1F3F8;
+  cursor: grab;
+}
+
+.light-bg {
+  background-color: #F0F0F0;
+}
+
+.white-bg {
+  background-color: #white;
+}
+
+// Override styles for the float menus on /admin/forms
+.usa-nav__primary.float-menu button[aria-expanded=false] {
+  background: none;
+  color: inherit;
+}
+.usa-nav__primary.float-menu button[aria-expanded=true] {
+  background: none;
+  color: inherit;
+}
+
+.usa-button.usa-button--unstyled {
+  margin-right: 1em;
+  text-decoration: none;
+}
+
+.usa-table {
+  th, td {
+    border: 1px solid #f0f0f0;
+  }
+  td:first-child {
+    border-left: 1px solid #f0f0f0;
+  }
+  td:last-child {
+    border-right: 1px solid #f0f0f0;
+  }
+  tbody tr:last-child {
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
+
+// Override
+.usa-nav__secondary {
+  bottom: 1.5rem;
+}
+
+
+// Add Custom Inverted button style
+.usa-button.usa-button-inverted {
+  border-color: #005ea2;
+  background-color: white;
+  color: #005ea2;
+}
+
+.usa-button.usa-button-inverted:hover {
+  border-color: white;
+  background-color: #005ea2;
+  color: white;
+}
+
+.add-box-shadow {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+@media (min-width: 64em) {
+  .float-menu .usa-nav__submenu {
+    background-color: #F0F0F0;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    .usa-nav__submenu-item a {
+      color: #005ea2;
+    }
+  }
+}
+
+.star_rating svg {
+	width: 1em;
+	height: 1em;
+	fill: currentColor;
+	stroke: currentColor;
+}
+.star_rating label, .star_rating output {
+	display: block;
+	float: left;
+	font-size: 2em;
+	height: 1.2em;
+	color: #036;
+	cursor: pointer;
+	/* Transparent border-bottom avoids jumping
+	   when a colored border is applied
+		 on :hover/:focus */
+	border-bottom: 2px solid transparent;
+}
+.star_rating output {
+	font-size: 1.5em;
+	padding: 0 1em;
+}
+.star_rating input:checked ~ label {
+	color: #999;
+}
+.star_rating input:checked + label {
+	color: #036;
+	border-bottom-color: #036;
+}
+.star_rating input:focus + label {
+	border-bottom-style: dotted;
+}
+.star_rating:hover input + label {
+	color: #036;
+}
+.star_rating input:hover ~ label,
+.star_rating input:focus ~ label,
+.star_rating input[id="star0"] + label {
+	color: #999;
+}
+.star_rating input:hover + label,
+.star_rating input:focus + label {
+	color: #036;
+}
+.star_rating input[id="star0"]:checked + label {
+	color: #ff2d21;
+}
+.form-section-div {
+  background-color: #f0f0f0;
+}
+
+.question-menu-action {
+  float: right;
+  background: #FFFFFF;
+  border: 2px solid black;
+  border-radius: 50%;
+  padding: 8px;
+  position: relative;
+  padding-left: 16px;
+  padding-right: 16px;
+  z-index: 2;
+  right: 10px;
+  top: 10px;
+}
+
+.section-menu-div {
+  float: right;
+  position: relative;
+  z-index: 2;
+  top: 0px;
+}
+.qustion-menu-div {
+  float: right;
+  position: relative;
+  z-index: 1;
+  margin-top: 20px;
+}
+.dropdown-content {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background: white;
+  position: relative;
+  top: 24px;
+  float: right;
+  padding-left: 16px;
+  padding-right: 16px;
+  line-height: 24px;
+}
+.section-menu-div .dropdown-content {
+  top: 10px;
+}
+.dropdown-content a:hover, .dropdown-content a:visited, .dropdown-content a:link, .dropdown-content a:active {
+    text-decoration: none;
+    color: blue;
+}
+.section-header {
+  background: #71767A;
+  min-height: 50px;
+  padding: 8px 0px 0px 0px;
+}
+.fba-instructions .instructions {
+  display: inline-block;
+  min-width: 50px;
+}
+.section-title {
+  display: inline-block;
+  min-width: 50px;
+}
+.section-title-view {
+  position: relative;
+  padding-top: 10px;
+  padding-left: 20px ;
+  padding-bottom: 10px;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  color: #FFFFFF;
+}
+.form-builder {
+  .section {
+    border-bottom: 2px solid white;
+    padding-bottom: 20px;
+  }
+  .section-title-view {
+    padding-top: 0px ;
+  }
+
+}
+a.form-section-save {
+  color: white;
+}
+.ui-widget-header {
+  background: #FFFFFF;
+}
+
+#modal-window {
+  min-width: 600px;
+  background: #FFFFFF;
+}
+.fa-pencil-alt, .fa-save {
+  cursor: pointer;
+}
+.fa-save {
+  display:inherit;
+  color: blue;
+}
+.fa-trash-alt {
+   display:inherit;
+   color: red;
+}
+.form-title {
+  width: 400px;
+}
+.questions {
+  min-height: 10px;
+}
+a.form-save-question-option, a.form-delete-question-option {
+  text-decoration:none;
+}
+
+a.form-delete-question-option {
+  text-indent: 0;
+}
+// Single line text field input treatment
+.question-option-edit input {
+  width: 40%;
+}
+nav.pagination {
+  font-family:Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+  font-size:1.06rem;
+  line-height:1.3;
+  padding-left: 20px;
+}
+span.usa-hint.save-notice {
+  background: white;
+  border-radius: 4px;
+  color: green;
+  display: none;
+  padding: 4px;
+}
+
+// The public page
+.touchpoint-form {
+  background-color: #F1F1F1;
+  border-top: 1px solid #E5E5E5;
+  border-bottom: 1px solid #E5E5E5;
+
+  .inner-wrapper {
+    padding: 20px 20px 0 20px;
+  }
+  .section .questions .question:first-child {
+    margin-top: 0;
+  }
+  .question {
+    margin: 10px 0;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 1px;
+  }
+  .word-break {
+    word-wrap: break-word;
+  }
+}
+
+.usa-button.full-width {
+  width: 100%;
+}
+
+table .no-wrap {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+// override default USWDS style
+.form-builder .usa-checkbox {
+  background: none;
+}
+
+
+// Custom styles from Login.gov
+// for the Login.gov button
+.sign-in-logo.usa-button {
+    color: #1b1b1b;
+    font-weight: bold;
+    margin: 0;
+    background-color: #fff;
+    display: inline-block;
+    white-space: nowrap;
+    padding: 0.85rem;
+    padding: 0.75rem 0.5rem;
+    -webkit-box-shadow: inset 0 0 0 1px #bbb;
+    box-shadow: inset 0 0 0 1px #bbb;
+}
+
+.sign-in-logo.usa-button span {
+    color: transparent;
+    background: asset-url("login_sign_in.svg") no-repeat;
+    background-size: contain;
+    display: inline-block;
+    width: 6rem;
+    position: relative;
+    top: 0.125rem;
+    margin-left: 0.25rem;
+}
+
+.usa-input[disabled] {
+  background-color: #E5E5E5;
+}
+.delete-float-right {
+  float: right;
+  position: relative;
+  top: 10px;
+  right: 10px;
+}
+.delete-float-right a {
+  color: red;
+}
+.delete-goal-objective, .delete-goal-target {
+  color: #999999;
+}
+.tags-select {
+  height: 250px;
+}
+
+.usa-list .usa-tag {
+  display: inline-block;
+  margin-bottom: 7px;
+}
+
+.icon-link {
+  text-decoration: none;
+  padding-left: 10px;
+}

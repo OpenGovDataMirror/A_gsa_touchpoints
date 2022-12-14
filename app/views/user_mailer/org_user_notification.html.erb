@@ -1,0 +1,17 @@
+<%= render 'user_mailer/components/header' %>
+<h3>
+  New user added to organization
+  <%= @user.organization.name %>
+</h3>
+<p>
+  A new user with account <%= @user.email %>
+  was added to organization <%= @user.organization.domain %>
+  on <%= Date.today %>.
+</p>
+<p>
+  Next Steps:
+</p>
+<p>
+  Assign permissions to this User on the Form.
+  The User can be made a Form Manager or Response Viewer.
+</p>

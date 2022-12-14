@@ -1,0 +1,11 @@
+<% content_for :navigation_title do %>
+  New Mobile Product
+<% end %>
+<p>
+  <%= link_to admin_digital_products_path do %>
+    <i class="fa fa-arrow-circle-left"></i>
+    Back to Mobile Products
+  <% end %>
+</p>
+
+<%= render 'form', digital_product: @digital_product %>

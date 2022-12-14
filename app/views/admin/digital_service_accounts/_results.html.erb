@@ -1,0 +1,39 @@
+<table class="usa-table width-full">
+  <thead>
+    <tr>
+      <th data-sortable scope="col">Account type (platform)</th>
+      <th data-sortable scope="col">Name (handle)</th>
+      <th data-sortable scope="col">Status</th>
+      <th data-sortable scope="col">Updated at</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% digital_service_accounts.each do |digital_service_account| %>
+      <tr>
+        <td><%= digital_service_account.account %></td>
+        <td>
+          <%= link_to digital_service_account.name, admin_digital_service_account_path(digital_service_account) %>
+        </td>
+        <td>
+          <% if digital_service_account.aasm_state == "published" %>
+            <span class="usa-tag bg-success">
+              <%= digital_service_account.aasm_state %>
+            </span>
+          <% elsif digital_service_account.aasm_state == "archived" %>
+            <span class="usa-tag bg-base-lighter">
+              <%= digital_service_account.aasm_state %>
+            </span>
+          <% else %>
+            <span class="usa-tag">
+              <%= digital_service_account.aasm_state %>
+            </span>
+          <% end %>
+        </td>
+        <td data-sort-value="<%= digital_service_account.updated_at.to_i %>">
+          <%= digital_service_account.updated_at %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

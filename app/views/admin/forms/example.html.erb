@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'>
+    <title>
+      Touchpoints Example
+    </title>
+
+    <!-- Demo content styles -->
+    <style>
+    .demo-content {
+      background-color: #efefef;
+      border: 1px solid #E5E5E5;
+      min-height: 100px;
+    }
+    .demo-grid {
+      margin-bottom: 4rem;
+    }
+    .demo-grid div {
+      min-height: 300px;
+    }
+    </style>
+    <!-- End demo content styles -->
+
+    <%= favicon_link_tag asset_path('favicon.ico') %>
+  </head>
+  <body>
+    <!-- Demo content -->
+    <% if @form.delivery_method == "inline" %>
+    <br>
+    <div class="grid-container">
+      <div class="grid-col-12">
+        <div id="<%= @form.element_selector %>">
+          Touchpoint will be rendered here.
+        </div>
+      </div>
+    </div>
+    <br>
+    <% elsif @form.delivery_method == "custom-button-modal" %>
+    <br>
+    <div class="grid-container">
+      <div class="grid-col-12">
+        <div style="padding-left: 5rem; padding-top: 5rem;">
+          <a id="<%= @form.element_selector %>" style="color: DeepPink; font-family: sans-serif; font-size: 2rem; border: 7px solid DeepPink; border-radius: 1rem; padding: 1rem; background-color: LightPink;">
+            This is a custom button
+          </a>
+        </div>
+      </div>
+    </div>
+    <br>
+    <% else %>
+    <div class="grid-container demo-grid">
+      <div class="grid-row grid-gap-md">
+        <div class="grid-col-12 demo-content">
+        </div>
+      </div>
+    </div>
+    <div class="grid-container demo-grid">
+      <div class="grid-row grid-gap-md">
+        <div class="grid-col-12 demo-content">
+          <div style="text-align: center; font-size: 3em; opacity: 0.1; padding: 1rem;">
+            Example page content
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid-container demo-grid">
+      <div class="grid-row grid-gap-md">
+        <div class="grid-col-12 demo-content"></div>
+      </div>
+    </div>
+    <div class="grid-container demo-grid">
+      <div class="grid-row grid-gap-md">
+        <div class="grid-col-12 demo-content"></div>
+      </div>
+    </div>
+    <% end %>
+    <!--- End demo content -->
+    <script src="<%= touchpoint_url(@form.short_uuid, format: :js) %>" async></script>
+  </body>
+</html>

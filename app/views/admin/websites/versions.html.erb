@@ -1,0 +1,5 @@
+ <%= render partial: "/components/admin/versions",
+  locals: {
+    title: "Website #{@website.domain} versions",
+    return_path: admin_website_path(@website),
+    export_path: export_versions_admin_website_url(@website,format: "csv")} %>

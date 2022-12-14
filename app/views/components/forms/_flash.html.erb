@@ -1,0 +1,20 @@
+<div class="fba-alert usa-alert usa-alert--success" role="status" hidden>
+  <div class="usa-alert__body">
+    <h3 class="usa-alert__heading">
+      <%= form.success_text_heading %>
+    </h3>
+    <p class="usa-alert__text">
+      <%= sanitize(form.success_text) %>
+    </p>
+  </div>
+</div>
+<div class="fba-alert-error usa-alert usa-alert--error" role="alert" hidden>
+  <div class="usa-alert__body">
+    <h3 class="usa-alert__heading">
+      <%= t 'error' %>
+    </h3>
+    <p class="usa-alert__text">
+      alert message
+    </p>
+  </div>
+</div>

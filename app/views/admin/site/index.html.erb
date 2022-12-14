@@ -1,0 +1,223 @@
+<% content_for :full_layout do %>
+<%= javascript_include_tag "chartjs-2.9.3.bundle.js" %>
+<section class="light-blue-bg">
+  &nbsp;
+  <div class="grid-container-widescreen">
+    <div>
+      <h1>
+        Welcome to Touchpoints
+      </h1>
+
+      <p>
+        You are a
+        <%= current_user.role %>
+        of
+        <%= current_user.organization.name %>.
+      </p>
+    </div>
+  </div>
+  <br>
+</section>
+<section>
+  <main id="main-content">
+    <div class="grid-container-widescreen">
+      <% if admin_permissions? %>
+      <div class="well">
+        <div class="grid-row">
+          <div class="grid-col-3">
+            <ul class="usa-list">
+              <li>
+                <a href="/admin/organizations">
+                  <span>Organizations</span>
+                </a>
+              </li>
+              <li>
+                <a href="/admin/users">
+                  <span>Users</span>
+                </a>
+              </li>
+              <li>
+                <a href="/admin/management">
+                  <span>Client Management</span>
+                </a>
+              </li>
+              <li>
+                <a href="/admin/events">
+                  <span>System Events</span>
+                </a>
+              </li>
+              <li>
+                <a href="/admin/sidekiq">
+                  <span>Manage Sidekiq</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="grid-col-3">
+            <ul class="usa-list">
+              <li>
+                <%= link_to admin_service_providers_path do %>
+                Service Providers
+                <% end %>
+              </li>
+              <li>
+                <%= link_to admin_services_path do %>
+                <span>Services &amp; stages</span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to admin_personas_path do %>
+                  Personas
+                <% end %>
+              </li>
+              <li>
+                <%= link_to admin_offerings_path do %>
+                  Offerings
+                <% end %>
+              </li>
+              <li>
+                <%= link_to admin_goals_path do %>
+                <span>Goals &amp; Objectives</span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to admin_milestones_path do %>
+                <span>Milestones</span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to admin_barriers_path do %>
+                  Barriers
+                <% end %>
+              </li>
+            </ul>
+          </div>
+          <div class="grid-col-3">
+            <ul class="usa-list">
+              <li>
+                <a href="/admin/websites">
+                  <span>Websites</span>
+                </a>
+                <ul>
+                  <li>
+                    <a href="/admin/websites/gsa">
+                      <span>GSA Summary</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/admin/websites/dendrogram/">
+                      <span>Dendrogram</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <%= link_to admin_digital_products_path do %>
+                  Digital Products
+                <% end %>
+              </li>
+              <li>
+                <%= link_to admin_digital_service_accounts_path do %>
+                  Social Media Accounts
+                <% end %>
+              </li>
+            </ul>
+          </div>
+          <div class="grid-col-3">
+            <ul class="usa-list">
+              <li>
+                <%= link_to admin_reporting_path do %>
+                  Admin Reporting
+                <% end %>
+              </li>
+              <li>
+                <%= link_to admin_collections_path do %>
+                <span>Data Collections</span>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to admin_omb_cx_reporting_collections_path do %>
+                <span>OMB CX Reporting Collections</span>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <p>
+        </p>
+      </div>
+      <%= render 'components/weekly_metrics', forms: @forms %>
+      <div class="well">
+        <h3>
+          Data collected over past <%= @days_since %> days
+        </h3>
+        <p>
+          See the last:
+          <a href="?recent=7">
+            7 days
+          </a>
+          &middot;
+          <a href="?recent=14">
+            14 days
+          </a>
+          &middot;
+          <a href="?recent=30">
+            30 days
+          </a>
+          &middot;
+          <a href="?recent=60">
+            60 days
+          </a>
+          &middot;
+          <a href="?recent=90">
+            90 days
+          </a>
+          &middot;
+          <a href="?recent=180">
+            180 days
+          </a>
+          &middot;
+          <a href="?recent=365">
+            365 days
+          </a>
+        </p>
+        <%= render 'components/admin/recent_responses', forms: @recent_forms, days_since: @days_since %>
+      </div>
+      <div class="well">
+        <%= render 'components/admin/responses_per_day', response_groups: @response_groups %>
+      </div>
+      <div class="well">
+        <%= render 'components/admin/new_users_over_time', user_groups: @user_groups, inactive_user_groups: @inactive_user_groups %>
+      </div>
+      <% else %>
+        <h4>
+          Get started with Touchpoints:
+        </h4>
+
+        <ol>
+          <li>
+            <%= link_to "Create a Form", new_admin_form_path(ref: :dashboard) %>
+          </li>
+          <li>
+            Customize the Form with Questions and Question Options
+          </li>
+          <li>
+            Test the Form by creating a Response
+          </li>
+          <li>
+            Deploy the Form to Users on your website or via your email system
+          </li>
+          <li>
+            Receive feedback from Users
+          </li>
+          <li>
+            Use the feedback to improve service delivery
+          </li>
+        </ol>
+      <% end %>
+      <br>
+      <br>
+    </div>
+  </main>
+</section>
+<% end %>
